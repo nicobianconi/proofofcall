@@ -1,0 +1,4 @@
+streamlit>=1.50
+pandas>=2.0
+yfinance>=0.2.50
+tzdata  # time zone data, needed on Windows

@@ -1,0 +1,1628 @@
+[
+  {
+    "index": 0,
+    "timestamp": "2026-08-22T09:00:00Z",
+    "type": "GENESIS",
+    "data": {
+      "message": "ProofOfCall ledger created"
+    },
+    "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "10c00cda4540adad56fe08a0fc778ef74ff03e52c65901933de8dfa54b175e0a"
+  },
+  {
+    "index": 1,
+    "timestamp": "2026-08-27T09:00:00Z",
+    "type": "REGISTER",
+    "data": {
+      "handle": "@valuevera",
+      "display_name": "Vera Rossi",
+      "platform": "YouTube"
+    },
+    "prev_hash": "10c00cda4540adad56fe08a0fc778ef74ff03e52c65901933de8dfa54b175e0a",
+    "hash": "9ed0da8ac4189f92ef2e879e7357a90c8384d2c089ec8bd93914b847fb16cd31"
+  },
+  {
+    "index": 2,
+    "timestamp": "2026-08-28T09:00:00Z",
+    "type": "REGISTER",
+    "data": {
+      "handle": "@cryptokingmax",
+      "display_name": "Max Crypto",
+      "platform": "TikTok"
+    },
+    "prev_hash": "9ed0da8ac4189f92ef2e879e7357a90c8384d2c089ec8bd93914b847fb16cd31",
+    "hash": "37a57b5cd23ecf4c27699eea570bb5b8258ff550b4efad28d20b975d2712c679"
+  },
+  {
+    "index": 3,
+    "timestamp": "2026-08-29T09:00:00Z",
+    "type": "REGISTER",
+    "data": {
+      "handle": "@moonshotmarco",
+      "display_name": "Marco Moonshot",
+      "platform": "Telegram"
+    },
+    "prev_hash": "37a57b5cd23ecf4c27699eea570bb5b8258ff550b4efad28d20b975d2712c679",
+    "hash": "0605254c3a4a7a5b3d79a2a849f579ecd0ab80fc0dfb611d839b72799b59093b"
+  },
+  {
+    "index": 4,
+    "timestamp": "2026-08-30T09:00:00Z",
+    "type": "REGISTER",
+    "data": {
+      "handle": "@dividendgiulia",
+      "display_name": "Giulia Bianchi",
+      "platform": "Instagram"
+    },
+    "prev_hash": "0605254c3a4a7a5b3d79a2a849f579ecd0ab80fc0dfb611d839b72799b59093b",
+    "hash": "3b6ac7a13265a8509cf77f954edb6166e30f6aa97e34df4f1919a37ee03c2500"
+  },
+  {
+    "index": 5,
+    "timestamp": "2026-09-03T10:00:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "8c5016bd7d4224d66f939866508f8290208f26c5d36f70d7bc3ca8050876bcca",
+      "commit_code": "8c5016bd",
+      "deadline": "2026-09-08T21:00:00Z",
+      "reveal_until": "2026-09-08T21:15:00Z"
+    },
+    "prev_hash": "3b6ac7a13265a8509cf77f954edb6166e30f6aa97e34df4f1919a37ee03c2500",
+    "hash": "f88ffd26aae1db65378687888713b14bad186036d13737cca338b09315e6f4d5"
+  },
+  {
+    "index": 6,
+    "timestamp": "2026-09-04T10:11:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@dividendgiulia",
+      "commit_hash": "d09142728885d95e0960560f44016ed0a54288d14c1a732e8935a33c45223fca",
+      "commit_code": "d0914272",
+      "deadline": "2026-09-07T21:00:00Z",
+      "reveal_until": "2026-09-07T21:15:00Z"
+    },
+    "prev_hash": "f88ffd26aae1db65378687888713b14bad186036d13737cca338b09315e6f4d5",
+    "hash": "177253c1ce3d8967638a358df22640f02c15eee91d9dfe021ef2e54d109f217c"
+  },
+  {
+    "index": 7,
+    "timestamp": "2026-09-06T19:20:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "f3e6e0fdc516d3df09524ee5396650e57e7a43bc59e425694443a419cf101e49",
+      "commit_code": "f3e6e0fd",
+      "deadline": "2026-09-08T21:00:00Z",
+      "reveal_until": "2026-09-08T21:15:00Z"
+    },
+    "prev_hash": "177253c1ce3d8967638a358df22640f02c15eee91d9dfe021ef2e54d109f217c",
+    "hash": "b9fd3e1dbdb6b1a6a264fc318a40234cfbe6f0f3e7602551b214569402e34e17"
+  },
+  {
+    "index": 8,
+    "timestamp": "2026-09-07T13:01:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "e5d07ad448d5e3622e691de3f249be70198ab670c11225049a01cce15741e8c6",
+      "commit_code": "e5d07ad4",
+      "deadline": "2026-09-11T21:00:00Z",
+      "reveal_until": "2026-09-11T21:15:00Z"
+    },
+    "prev_hash": "b9fd3e1dbdb6b1a6a264fc318a40234cfbe6f0f3e7602551b214569402e34e17",
+    "hash": "f55aae49041f00de69996f8bdd486fdec6bd5f6abee4b28f172ded594b6bb11a"
+  },
+  {
+    "index": 9,
+    "timestamp": "2026-09-07T21:07:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "d09142728885d95e0960560f44016ed0a54288d14c1a732e8935a33c45223fca",
+      "commit_code": "d0914272",
+      "handle": "@dividendgiulia",
+      "ticker": "BTC-USD",
+      "direction": "DOWN",
+      "target": "85956.88",
+      "deadline": "2026-09-07T21:00:00Z",
+      "nonce": "2eba225594f800b353ff61317f5bf0ef",
+      "price_at_commit": 86997.54,
+      "price_at_deadline": 86564.93,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "f55aae49041f00de69996f8bdd486fdec6bd5f6abee4b28f172ded594b6bb11a",
+    "hash": "76aff4ff87350c6263b38d61f6a935225753f76c06729f6044309af629d65d85"
+  },
+  {
+    "index": 10,
+    "timestamp": "2026-09-08T02:16:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "fdb8a8c6e96618f106222f11d61998e10afedb5f5e2f24d7d79acc05148c40ea",
+      "commit_code": "fdb8a8c6",
+      "deadline": "2026-09-13T21:00:00Z",
+      "reveal_until": "2026-09-13T21:15:00Z"
+    },
+    "prev_hash": "76aff4ff87350c6263b38d61f6a935225753f76c06729f6044309af629d65d85",
+    "hash": "247244c99174d0b6e411d8df8eda9027a646550ce5bdc38b3d7061eaac931c83"
+  },
+  {
+    "index": 11,
+    "timestamp": "2026-09-08T06:25:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "fdf9d7e5954ef03b46bd1b86f9d44abfabc317b154dce6aa78646e9db3904ffb",
+      "commit_code": "fdf9d7e5",
+      "deadline": "2026-09-14T21:00:00Z",
+      "reveal_until": "2026-09-14T21:15:00Z"
+    },
+    "prev_hash": "247244c99174d0b6e411d8df8eda9027a646550ce5bdc38b3d7061eaac931c83",
+    "hash": "4b8ce1fdf110a98ce8b154a254e225529e34de8fefb6d84c56e665190aea5f6a"
+  },
+  {
+    "index": 12,
+    "timestamp": "2026-09-08T21:04:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "8c5016bd7d4224d66f939866508f8290208f26c5d36f70d7bc3ca8050876bcca",
+      "commit_code": "8c5016bd",
+      "handle": "@moonshotmarco",
+      "ticker": "TSLA",
+      "direction": "UP",
+      "target": "274.61",
+      "deadline": "2026-09-08T21:00:00Z",
+      "nonce": "f6cfe78e4aea4813fee594ac95feb201",
+      "price_at_commit": 271.76,
+      "price_at_deadline": 281.82,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "4b8ce1fdf110a98ce8b154a254e225529e34de8fefb6d84c56e665190aea5f6a",
+    "hash": "7d00c2e4bce725469671eff7adc8c2c0def461c595f0eb9b32d692d0ae6019f1"
+  },
+  {
+    "index": 13,
+    "timestamp": "2026-09-08T21:07:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "f3e6e0fdc516d3df09524ee5396650e57e7a43bc59e425694443a419cf101e49",
+      "commit_code": "f3e6e0fd",
+      "handle": "@cryptokingmax",
+      "ticker": "ENI.MI",
+      "direction": "UP",
+      "target": "13.24",
+      "deadline": "2026-09-08T21:00:00Z",
+      "nonce": "bac8527f43b44c819071e39cf5a6cbff",
+      "price_at_commit": 13.07,
+      "price_at_deadline": 13.76,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "7d00c2e4bce725469671eff7adc8c2c0def461c595f0eb9b32d692d0ae6019f1",
+    "hash": "ea0b725b08d36b995e1c95f1b2763e1057b16f7db9d8aeb586be38f8c79d27fa"
+  },
+  {
+    "index": 14,
+    "timestamp": "2026-09-09T19:34:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "52c6a9463080c0560a9e9dc6122b4ab93536a76f3f82757670e315f86220131b",
+      "commit_code": "52c6a946",
+      "deadline": "2026-09-14T21:00:00Z",
+      "reveal_until": "2026-09-14T21:15:00Z"
+    },
+    "prev_hash": "ea0b725b08d36b995e1c95f1b2763e1057b16f7db9d8aeb586be38f8c79d27fa",
+    "hash": "ef18999e69f5a5fdaae08664f4e53e811e73848aeadeecd7a7df928b8e23406c"
+  },
+  {
+    "index": 15,
+    "timestamp": "2026-09-11T07:10:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "6fc9b77ea0a4ea0bfc7ac0ba398bf1fb3240a37c11a5d2cd212beb2f431a3f6f",
+      "commit_code": "6fc9b77e",
+      "deadline": "2026-09-12T21:00:00Z",
+      "reveal_until": "2026-09-12T21:15:00Z"
+    },
+    "prev_hash": "ef18999e69f5a5fdaae08664f4e53e811e73848aeadeecd7a7df928b8e23406c",
+    "hash": "3ffa17a4859b1139965f4cdaea5f7011b058fe563122047e1b308d841ece1f6b"
+  },
+  {
+    "index": 16,
+    "timestamp": "2026-09-12T05:40:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "e5d07ad448d5e3622e691de3f249be70198ab670c11225049a01cce15741e8c6",
+      "commit_code": "e5d07ad4",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "3ffa17a4859b1139965f4cdaea5f7011b058fe563122047e1b308d841ece1f6b",
+    "hash": "4d4dd75f625f1d3cd79e2a2f1fd5d500e22148b5abc115b90343f406dbe3eac8"
+  },
+  {
+    "index": 17,
+    "timestamp": "2026-09-12T05:40:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "ce62b329dea68d2c3f3f8137877f12235acf9b0a606bf346d067f29e2a2a6fcc",
+      "commit_code": "ce62b329",
+      "deadline": "2026-09-15T21:00:00Z",
+      "reveal_until": "2026-09-15T21:15:00Z"
+    },
+    "prev_hash": "4d4dd75f625f1d3cd79e2a2f1fd5d500e22148b5abc115b90343f406dbe3eac8",
+    "hash": "a057ab97f52fe333d7c7591bf08d54135b6b1d79ad5884ebdffd045e4cf7174b"
+  },
+  {
+    "index": 18,
+    "timestamp": "2026-09-12T11:55:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "36ec120885e94ae53c885df2ad71434a99b7ff49fcf5ca25764bbfce98e41ddc",
+      "commit_code": "36ec1208",
+      "deadline": "2026-09-18T21:00:00Z",
+      "reveal_until": "2026-09-18T21:15:00Z"
+    },
+    "prev_hash": "a057ab97f52fe333d7c7591bf08d54135b6b1d79ad5884ebdffd045e4cf7174b",
+    "hash": "0a2dae558beede79d096343783c3dd351cb624504cd5cf7dbc621cc7958f4537"
+  },
+  {
+    "index": 19,
+    "timestamp": "2026-09-12T21:06:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "6fc9b77ea0a4ea0bfc7ac0ba398bf1fb3240a37c11a5d2cd212beb2f431a3f6f",
+      "commit_code": "6fc9b77e",
+      "handle": "@valuevera",
+      "ticker": "AAPL",
+      "direction": "DOWN",
+      "target": "213.54",
+      "deadline": "2026-09-12T21:00:00Z",
+      "nonce": "bc62641e8709f394eae418d80b87d50a",
+      "price_at_commit": 219.28,
+      "price_at_deadline": 212.9,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "0a2dae558beede79d096343783c3dd351cb624504cd5cf7dbc621cc7958f4537",
+    "hash": "95103bf240f84624cd03e9195af30248380c2d8b262f40dd28e868b955634944"
+  },
+  {
+    "index": 20,
+    "timestamp": "2026-09-13T11:51:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "a804681db42f0ab0e2eb03b1a48a6c70a0799d7a2c60c689ff687e03ebef241a",
+      "commit_code": "a804681d",
+      "deadline": "2026-09-17T21:00:00Z",
+      "reveal_until": "2026-09-17T21:15:00Z"
+    },
+    "prev_hash": "95103bf240f84624cd03e9195af30248380c2d8b262f40dd28e868b955634944",
+    "hash": "3b441e5844c3a79dc2097c8d5644c309a4824ebc3f994463690dda54c11c998c"
+  },
+  {
+    "index": 21,
+    "timestamp": "2026-09-13T21:02:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "fdb8a8c6e96618f106222f11d61998e10afedb5f5e2f24d7d79acc05148c40ea",
+      "commit_code": "fdb8a8c6",
+      "handle": "@moonshotmarco",
+      "ticker": "ENI.MI",
+      "direction": "UP",
+      "target": "13.47",
+      "deadline": "2026-09-13T21:00:00Z",
+      "nonce": "2616990adaea03c65d00c02f085ebb6d",
+      "price_at_commit": 13.19,
+      "price_at_deadline": 14.08,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "3b441e5844c3a79dc2097c8d5644c309a4824ebc3f994463690dda54c11c998c",
+    "hash": "27d363f4682a349cfdc83277901b09934959618afdd92b515988be859ecddeae"
+  },
+  {
+    "index": 22,
+    "timestamp": "2026-09-14T21:03:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "fdf9d7e5954ef03b46bd1b86f9d44abfabc317b154dce6aa78646e9db3904ffb",
+      "commit_code": "fdf9d7e5",
+      "handle": "@moonshotmarco",
+      "ticker": "NVDA",
+      "direction": "UP",
+      "target": "191.40",
+      "deadline": "2026-09-14T21:00:00Z",
+      "nonce": "e4fcbe6e248be2a229f684968b8b51ca",
+      "price_at_commit": 190.13,
+      "price_at_deadline": 207.93,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "27d363f4682a349cfdc83277901b09934959618afdd92b515988be859ecddeae",
+    "hash": "8aa58f24911c72ff8b69aa119970579f56132fad6646e2703fd8d78f7ecc5338"
+  },
+  {
+    "index": 23,
+    "timestamp": "2026-09-14T21:08:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "52c6a9463080c0560a9e9dc6122b4ab93536a76f3f82757670e315f86220131b",
+      "commit_code": "52c6a946",
+      "handle": "@valuevera",
+      "ticker": "AAPL",
+      "direction": "DOWN",
+      "target": "226.21",
+      "deadline": "2026-09-14T21:00:00Z",
+      "nonce": "3dbb953f6792692a9c1c89ed9dd5f633",
+      "price_at_commit": 227.88,
+      "price_at_deadline": 214.18,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "8aa58f24911c72ff8b69aa119970579f56132fad6646e2703fd8d78f7ecc5338",
+    "hash": "90e5910e534eca0226817956f9f86d5411d8fb9e9776aa5e1c2843c69c8e1727"
+  },
+  {
+    "index": 24,
+    "timestamp": "2026-09-14T22:08:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "69fe96285e8fd5f73d6e3329351b2364bab10c04913d794ed6835317adfe0512",
+      "commit_code": "69fe9628",
+      "deadline": "2026-09-20T21:00:00Z",
+      "reveal_until": "2026-09-20T21:15:00Z"
+    },
+    "prev_hash": "90e5910e534eca0226817956f9f86d5411d8fb9e9776aa5e1c2843c69c8e1727",
+    "hash": "09694de635b8e6c03118ef0266bf843a28045b591e5e59466f59c4fa0e4c3514"
+  },
+  {
+    "index": 25,
+    "timestamp": "2026-09-15T21:08:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "ce62b329dea68d2c3f3f8137877f12235acf9b0a606bf346d067f29e2a2a6fcc",
+      "commit_code": "ce62b329",
+      "handle": "@moonshotmarco",
+      "ticker": "ENI.MI",
+      "direction": "DOWN",
+      "target": "13.82",
+      "deadline": "2026-09-15T21:00:00Z",
+      "nonce": "7dbe6b6038b69e8bab6c09ec9706028b",
+      "price_at_commit": 13.97,
+      "price_at_deadline": 14.46,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "09694de635b8e6c03118ef0266bf843a28045b591e5e59466f59c4fa0e4c3514",
+    "hash": "54f04624d9f0805a6b8667df597e08fbe98c0dc93b7f2dc929aeef8f5e4edf3b"
+  },
+  {
+    "index": 26,
+    "timestamp": "2026-09-16T05:08:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "3eb1daa075308714eb5725a53850d4dac13b6a361194fea0866036a03bcd7834",
+      "commit_code": "3eb1daa0",
+      "deadline": "2026-09-22T21:00:00Z",
+      "reveal_until": "2026-09-22T21:15:00Z"
+    },
+    "prev_hash": "54f04624d9f0805a6b8667df597e08fbe98c0dc93b7f2dc929aeef8f5e4edf3b",
+    "hash": "a6c14118dd642bd0b06cf9459990b50bd9e086e7cd41a75188b4a70fc439a8f6"
+  },
+  {
+    "index": 27,
+    "timestamp": "2026-09-17T21:04:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "a804681db42f0ab0e2eb03b1a48a6c70a0799d7a2c60c689ff687e03ebef241a",
+      "commit_code": "a804681d",
+      "handle": "@valuevera",
+      "ticker": "BTC-USD",
+      "direction": "UP",
+      "target": "98665.06",
+      "deadline": "2026-09-17T21:00:00Z",
+      "nonce": "3b07b61d28b50c5534856be4df85d72e",
+      "price_at_commit": 96189.61,
+      "price_at_deadline": 98754.56,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "a6c14118dd642bd0b06cf9459990b50bd9e086e7cd41a75188b4a70fc439a8f6",
+    "hash": "50e080fa725fba505ced2024385c97f9c0ad911302d591950583b491c7a09f81"
+  },
+  {
+    "index": 28,
+    "timestamp": "2026-09-20T21:07:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "36ec120885e94ae53c885df2ad71434a99b7ff49fcf5ca25764bbfce98e41ddc",
+      "commit_code": "36ec1208",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "50e080fa725fba505ced2024385c97f9c0ad911302d591950583b491c7a09f81",
+    "hash": "7afb84c992954bdf1408a3d71fd41a3054f63c4cbdbd214860113e7ec40dc2a8"
+  },
+  {
+    "index": 29,
+    "timestamp": "2026-09-20T21:07:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "69fe96285e8fd5f73d6e3329351b2364bab10c04913d794ed6835317adfe0512",
+      "commit_code": "69fe9628",
+      "handle": "@valuevera",
+      "ticker": "BTC-USD",
+      "direction": "DOWN",
+      "target": "95621.14",
+      "deadline": "2026-09-20T21:00:00Z",
+      "nonce": "72bdba4c25f5dc4effdba7abf21811ca",
+      "price_at_commit": 98305.32,
+      "price_at_deadline": 96750.93,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "7afb84c992954bdf1408a3d71fd41a3054f63c4cbdbd214860113e7ec40dc2a8",
+    "hash": "9f244b3d0f2b0cdbf1eb73ef93d434e5cb90baedc837f11132af646cf17e0afc"
+  },
+  {
+    "index": 30,
+    "timestamp": "2026-09-21T22:31:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "75c0dd6bd0a5dd5af4f7ce4bdc9a12464559a8500d2acc1a5a13a238ac0e31b4",
+      "commit_code": "75c0dd6b",
+      "deadline": "2026-09-26T21:00:00Z",
+      "reveal_until": "2026-09-26T21:15:00Z"
+    },
+    "prev_hash": "9f244b3d0f2b0cdbf1eb73ef93d434e5cb90baedc837f11132af646cf17e0afc",
+    "hash": "6e21059d6361815def9f0d59363a7d52a05b4bc637e94d63343433c329b11012"
+  },
+  {
+    "index": 31,
+    "timestamp": "2026-09-23T23:08:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "3eb1daa075308714eb5725a53850d4dac13b6a361194fea0866036a03bcd7834",
+      "commit_code": "3eb1daa0",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "6e21059d6361815def9f0d59363a7d52a05b4bc637e94d63343433c329b11012",
+    "hash": "ce38313306baee590f59d65d63b4d85e718b0601a7d511cc158617a0ecfadb54"
+  },
+  {
+    "index": 32,
+    "timestamp": "2026-09-23T23:08:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "0b59eda35056323073aad08aac8b57a7c8c9c7a925c32c2723bb50e8a26c884b",
+      "commit_code": "0b59eda3",
+      "deadline": "2026-09-28T21:00:00Z",
+      "reveal_until": "2026-09-28T21:15:00Z"
+    },
+    "prev_hash": "ce38313306baee590f59d65d63b4d85e718b0601a7d511cc158617a0ecfadb54",
+    "hash": "e64036207eac55b883baf4f572483e72b11705d2a18f4aed968ec04cd6d4ddac"
+  },
+  {
+    "index": 33,
+    "timestamp": "2026-09-23T23:26:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "4029a0c6a718e184006272997667a7a7e883caa812680106a9677b44ab51a8f1",
+      "commit_code": "4029a0c6",
+      "deadline": "2026-09-24T21:00:00Z",
+      "reveal_until": "2026-09-24T21:15:00Z"
+    },
+    "prev_hash": "e64036207eac55b883baf4f572483e72b11705d2a18f4aed968ec04cd6d4ddac",
+    "hash": "17bf0de8b198cfa82211ea3e3443ffc28c4405207eddbb418075742b4080a68e"
+  },
+  {
+    "index": 34,
+    "timestamp": "2026-09-24T18:16:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "26cd2bc43fa6dadbdc47abed528ae9140661507c52986b4e73c7ec5373a45f1b",
+      "commit_code": "26cd2bc4",
+      "deadline": "2026-09-29T21:00:00Z",
+      "reveal_until": "2026-09-29T21:15:00Z"
+    },
+    "prev_hash": "17bf0de8b198cfa82211ea3e3443ffc28c4405207eddbb418075742b4080a68e",
+    "hash": "1b06e0c310dfef9d2306b59c9607d35f84d92fbcb8c80b105256a234e288add1"
+  },
+  {
+    "index": 35,
+    "timestamp": "2026-09-24T21:09:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "4029a0c6a718e184006272997667a7a7e883caa812680106a9677b44ab51a8f1",
+      "commit_code": "4029a0c6",
+      "handle": "@valuevera",
+      "ticker": "AAPL",
+      "direction": "UP",
+      "target": "225.73",
+      "deadline": "2026-09-24T21:00:00Z",
+      "nonce": "046bc7bb0700202748b61095fc91846f",
+      "price_at_commit": 221.11,
+      "price_at_deadline": 222.51,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "1b06e0c310dfef9d2306b59c9607d35f84d92fbcb8c80b105256a234e288add1",
+    "hash": "549785cfdaca0f4b8134a6f9d4b9c0a4e3a22eeb7060c48677af502b414820f3"
+  },
+  {
+    "index": 36,
+    "timestamp": "2026-09-25T18:50:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "ec5ba66fd45c0696b349af0cad7cacaf76ff284347f6add685e144b43ea96566",
+      "commit_code": "ec5ba66f",
+      "deadline": "2026-09-30T21:00:00Z",
+      "reveal_until": "2026-09-30T21:15:00Z"
+    },
+    "prev_hash": "549785cfdaca0f4b8134a6f9d4b9c0a4e3a22eeb7060c48677af502b414820f3",
+    "hash": "01074b8f8f3f9980c3286f8a96daf389a50accc6f8fa5e1a2acf06942eabdb1e"
+  },
+  {
+    "index": 37,
+    "timestamp": "2026-09-26T21:09:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "75c0dd6bd0a5dd5af4f7ce4bdc9a12464559a8500d2acc1a5a13a238ac0e31b4",
+      "commit_code": "75c0dd6b",
+      "handle": "@moonshotmarco",
+      "ticker": "ENI.MI",
+      "direction": "DOWN",
+      "target": "12.62",
+      "deadline": "2026-09-26T21:00:00Z",
+      "nonce": "0478319f1e5fcb993a4b42940787d775",
+      "price_at_commit": 12.75,
+      "price_at_deadline": 12.78,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "01074b8f8f3f9980c3286f8a96daf389a50accc6f8fa5e1a2acf06942eabdb1e",
+    "hash": "874ddcf1346ff6c913aaa75354bf4f4f15c251ca9ffadc29f4e815640787d4a8"
+  },
+  {
+    "index": 38,
+    "timestamp": "2026-09-27T08:52:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "4ae7184cef4e576bda5d34c8ed7c989c3ad73f3f8f861bc7ce23bf925323fb26",
+      "commit_code": "4ae7184c",
+      "deadline": "2026-09-28T21:00:00Z",
+      "reveal_until": "2026-09-28T21:15:00Z"
+    },
+    "prev_hash": "874ddcf1346ff6c913aaa75354bf4f4f15c251ca9ffadc29f4e815640787d4a8",
+    "hash": "e34c73674d6754ac30cb8674831072d66845d2ff3bbc8100ce4ce4397793cfe6"
+  },
+  {
+    "index": 39,
+    "timestamp": "2026-09-28T09:13:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "a6d0494124f29856346b0720728da4d3e164ad302d6ecfce16f89aa3545fdfee",
+      "commit_code": "a6d04941",
+      "deadline": "2026-09-29T21:00:00Z",
+      "reveal_until": "2026-09-29T21:15:00Z"
+    },
+    "prev_hash": "e34c73674d6754ac30cb8674831072d66845d2ff3bbc8100ce4ce4397793cfe6",
+    "hash": "1679abbefd6aa31b477f7600d8ac1c705eb830e12c7c9ff367e78c72cbed82b9"
+  },
+  {
+    "index": 40,
+    "timestamp": "2026-09-28T21:01:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "0b59eda35056323073aad08aac8b57a7c8c9c7a925c32c2723bb50e8a26c884b",
+      "commit_code": "0b59eda3",
+      "handle": "@valuevera",
+      "ticker": "TSLA",
+      "direction": "UP",
+      "target": "280.50",
+      "deadline": "2026-09-28T21:00:00Z",
+      "nonce": "c0fc4a324db2c126921194e5bed2ee31",
+      "price_at_commit": 277.73,
+      "price_at_deadline": 304.94,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "1679abbefd6aa31b477f7600d8ac1c705eb830e12c7c9ff367e78c72cbed82b9",
+    "hash": "bf62a136c8f2e72de3212e3424d92c048c3f61dc47b3a192696c719dbee00896"
+  },
+  {
+    "index": 41,
+    "timestamp": "2026-09-29T21:01:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "4ae7184cef4e576bda5d34c8ed7c989c3ad73f3f8f861bc7ce23bf925323fb26",
+      "commit_code": "4ae7184c",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "bf62a136c8f2e72de3212e3424d92c048c3f61dc47b3a192696c719dbee00896",
+    "hash": "9a0de0d75791cb7f8ef171ebf93f697b5a554e2aea0e88bda720ec401833d057"
+  },
+  {
+    "index": 42,
+    "timestamp": "2026-09-29T21:01:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "a6d0494124f29856346b0720728da4d3e164ad302d6ecfce16f89aa3545fdfee",
+      "commit_code": "a6d04941",
+      "handle": "@valuevera",
+      "ticker": "ENI.MI",
+      "direction": "DOWN",
+      "target": "12.80",
+      "deadline": "2026-09-29T21:00:00Z",
+      "nonce": "27c2c860d6cfcfcd6271f16ea9a39ae9",
+      "price_at_commit": 13.09,
+      "price_at_deadline": 13.26,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "9a0de0d75791cb7f8ef171ebf93f697b5a554e2aea0e88bda720ec401833d057",
+    "hash": "e8edcb839d2b5bc445fe96e861e80731d368bd20ba8027bde59a4ac312597d58"
+  },
+  {
+    "index": 43,
+    "timestamp": "2026-09-29T21:09:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "26cd2bc43fa6dadbdc47abed528ae9140661507c52986b4e73c7ec5373a45f1b",
+      "commit_code": "26cd2bc4",
+      "handle": "@moonshotmarco",
+      "ticker": "BTC-USD",
+      "direction": "UP",
+      "target": "94428.32",
+      "deadline": "2026-09-29T21:00:00Z",
+      "nonce": "7ea60ef483d46ce3365bb2ec95f6f23e",
+      "price_at_commit": 92836.2,
+      "price_at_deadline": 99006.35,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "e8edcb839d2b5bc445fe96e861e80731d368bd20ba8027bde59a4ac312597d58",
+    "hash": "421c6062c070d5f393f33f8e4d0f2deb32d816d78a19bc1185a96467b6522848"
+  },
+  {
+    "index": 44,
+    "timestamp": "2026-10-01T15:21:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "ec5ba66fd45c0696b349af0cad7cacaf76ff284347f6add685e144b43ea96566",
+      "commit_code": "ec5ba66f",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "421c6062c070d5f393f33f8e4d0f2deb32d816d78a19bc1185a96467b6522848",
+    "hash": "7c31435e02e6f59f5f99b91bcb039f778f587a23411e3e2350329b2686843a4d"
+  },
+  {
+    "index": 45,
+    "timestamp": "2026-10-01T15:21:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "f24e6db0c750e1844fe70eba46523c0d96f0143b23663ab98150f35e1ce0e9e2",
+      "commit_code": "f24e6db0",
+      "deadline": "2026-10-05T21:00:00Z",
+      "reveal_until": "2026-10-05T21:15:00Z"
+    },
+    "prev_hash": "7c31435e02e6f59f5f99b91bcb039f778f587a23411e3e2350329b2686843a4d",
+    "hash": "8367819f95349ced482f9df40b1a45cbbe6af10de3875259d7c18c288952db15"
+  },
+  {
+    "index": 46,
+    "timestamp": "2026-10-04T09:39:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "5ffe80881cd922334a9991bba53541fabc2beeed4d16c2c798f1464ec2edc40d",
+      "commit_code": "5ffe8088",
+      "deadline": "2026-10-05T21:00:00Z",
+      "reveal_until": "2026-10-05T21:15:00Z"
+    },
+    "prev_hash": "8367819f95349ced482f9df40b1a45cbbe6af10de3875259d7c18c288952db15",
+    "hash": "57a2a117f8b6184c64d0fcbd5446e8111f011674c5ccc48805862ca2ba1a84c3"
+  },
+  {
+    "index": 47,
+    "timestamp": "2026-10-04T09:50:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "d3e8f78922cb714371cb105562b0985072184bcf9ac9fc8e6a7152cf255a3737",
+      "commit_code": "d3e8f789",
+      "deadline": "2026-10-07T21:00:00Z",
+      "reveal_until": "2026-10-07T21:15:00Z"
+    },
+    "prev_hash": "57a2a117f8b6184c64d0fcbd5446e8111f011674c5ccc48805862ca2ba1a84c3",
+    "hash": "89219ed01860631af7e0950d93648eea663a2a194af1018b420d1ed43697d22a"
+  },
+  {
+    "index": 48,
+    "timestamp": "2026-10-05T21:01:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "f24e6db0c750e1844fe70eba46523c0d96f0143b23663ab98150f35e1ce0e9e2",
+      "commit_code": "f24e6db0",
+      "handle": "@moonshotmarco",
+      "ticker": "NVDA",
+      "direction": "UP",
+      "target": "206.20",
+      "deadline": "2026-10-05T21:00:00Z",
+      "nonce": "0e205d9bfdc21b7bafb9f10970180dbb",
+      "price_at_commit": 202.96,
+      "price_at_deadline": 202.23,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "89219ed01860631af7e0950d93648eea663a2a194af1018b420d1ed43697d22a",
+    "hash": "a3237caa01951bf312cbe59941da00d4b31252411326b34dd62d575bfe7bf25e"
+  },
+  {
+    "index": 49,
+    "timestamp": "2026-10-05T21:08:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "5ffe80881cd922334a9991bba53541fabc2beeed4d16c2c798f1464ec2edc40d",
+      "commit_code": "5ffe8088",
+      "handle": "@cryptokingmax",
+      "ticker": "SOL-USD",
+      "direction": "DOWN",
+      "target": "132.52",
+      "deadline": "2026-10-05T21:00:00Z",
+      "nonce": "e24e10b4281191fab767df2c7769d219",
+      "price_at_commit": 134.72,
+      "price_at_deadline": 132.46,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "a3237caa01951bf312cbe59941da00d4b31252411326b34dd62d575bfe7bf25e",
+    "hash": "330448968c8a1807bebc4d502099224367570f5b0668a885025e91f1c59bda8c"
+  },
+  {
+    "index": 50,
+    "timestamp": "2026-10-06T19:07:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "5a0544acd81f60d39bba49b2fcb67d2159bd355b42aa037cd35558a560b51e80",
+      "commit_code": "5a0544ac",
+      "deadline": "2026-10-08T21:00:00Z",
+      "reveal_until": "2026-10-08T21:15:00Z"
+    },
+    "prev_hash": "330448968c8a1807bebc4d502099224367570f5b0668a885025e91f1c59bda8c",
+    "hash": "933b992364b5760f03d11c5fab303d775db91e735df2ca5b5cc426332759f1dd"
+  },
+  {
+    "index": 51,
+    "timestamp": "2026-10-07T21:07:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "d3e8f78922cb714371cb105562b0985072184bcf9ac9fc8e6a7152cf255a3737",
+      "commit_code": "d3e8f789",
+      "handle": "@valuevera",
+      "ticker": "ETH-USD",
+      "direction": "UP",
+      "target": "3003.67",
+      "deadline": "2026-10-07T21:00:00Z",
+      "nonce": "eefa7367c77d6f472a479783b3ab696b",
+      "price_at_commit": 2933.02,
+      "price_at_deadline": 3012.86,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "933b992364b5760f03d11c5fab303d775db91e735df2ca5b5cc426332759f1dd",
+    "hash": "5066eb0fd3be6c0919080a940d1f24f456f0c89b3a8e0696abd09bb25e3b2cf3"
+  },
+  {
+    "index": 52,
+    "timestamp": "2026-10-08T21:08:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "5a0544acd81f60d39bba49b2fcb67d2159bd355b42aa037cd35558a560b51e80",
+      "commit_code": "5a0544ac",
+      "handle": "@valuevera",
+      "ticker": "SOL-USD",
+      "direction": "DOWN",
+      "target": "123.97",
+      "deadline": "2026-10-08T21:00:00Z",
+      "nonce": "4ff92147d20342286cc1d8ff50077d7e",
+      "price_at_commit": 126.73,
+      "price_at_deadline": 125.59,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "5066eb0fd3be6c0919080a940d1f24f456f0c89b3a8e0696abd09bb25e3b2cf3",
+    "hash": "7938800907f50c3c3354b296e5fe5864077bb2e1806c1850b2297804d1334ce1"
+  },
+  {
+    "index": 53,
+    "timestamp": "2026-10-10T21:31:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@dividendgiulia",
+      "commit_hash": "944920626588c620ae7a38dff66ab3836c3b3e607344a5771f2c3d7adc67cddb",
+      "commit_code": "94492062",
+      "deadline": "2026-10-12T21:00:00Z",
+      "reveal_until": "2026-10-12T21:15:00Z"
+    },
+    "prev_hash": "7938800907f50c3c3354b296e5fe5864077bb2e1806c1850b2297804d1334ce1",
+    "hash": "a577cede9d1a0e2307634b5996c68de6f8d0f1df0206825fae37b8ed12397c01"
+  },
+  {
+    "index": 54,
+    "timestamp": "2026-10-12T21:04:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "944920626588c620ae7a38dff66ab3836c3b3e607344a5771f2c3d7adc67cddb",
+      "commit_code": "94492062",
+      "handle": "@dividendgiulia",
+      "ticker": "BTC-USD",
+      "direction": "DOWN",
+      "target": "97349.23",
+      "deadline": "2026-10-12T21:00:00Z",
+      "nonce": "927a35e3c132fd5950b86f1527d2286c",
+      "price_at_commit": 98909.66,
+      "price_at_deadline": 96297.89,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "a577cede9d1a0e2307634b5996c68de6f8d0f1df0206825fae37b8ed12397c01",
+    "hash": "b8cf5b8299c3197994d2d8cb317eca78d7aee006fcee40b3cfde74145f4f639e"
+  },
+  {
+    "index": 55,
+    "timestamp": "2026-10-18T12:05:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@dividendgiulia",
+      "commit_hash": "40012945d62267fb155e0a8c63109ab44dea3a5a08aca4a51a688526b624324e",
+      "commit_code": "40012945",
+      "deadline": "2026-10-20T21:00:00Z",
+      "reveal_until": "2026-10-20T21:15:00Z"
+    },
+    "prev_hash": "b8cf5b8299c3197994d2d8cb317eca78d7aee006fcee40b3cfde74145f4f639e",
+    "hash": "cb45ce6e58884cde9e0df1a46d551541f1cc3f3f702fd7fc2a5a7e13ac464cdb"
+  },
+  {
+    "index": 56,
+    "timestamp": "2026-10-20T15:56:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "77537c31aded672263fb744e36c2d4858eeb75a10e5ba81e84d9b80bdaef406e",
+      "commit_code": "77537c31",
+      "deadline": "2026-10-25T21:00:00Z",
+      "reveal_until": "2026-10-25T21:15:00Z"
+    },
+    "prev_hash": "cb45ce6e58884cde9e0df1a46d551541f1cc3f3f702fd7fc2a5a7e13ac464cdb",
+    "hash": "efa30f2ee24e81e237fe4c35c51c9a27dfd2ed3b710c64e15bfa851dd5ebe7e1"
+  },
+  {
+    "index": 57,
+    "timestamp": "2026-10-20T15:59:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "b388e37736be261f370172a11f78525070de63f3b1513f345d4a7bd2f7b1cc64",
+      "commit_code": "b388e377",
+      "deadline": "2026-10-21T21:00:00Z",
+      "reveal_until": "2026-10-21T21:15:00Z"
+    },
+    "prev_hash": "efa30f2ee24e81e237fe4c35c51c9a27dfd2ed3b710c64e15bfa851dd5ebe7e1",
+    "hash": "51dca569541a22612e9e3b72f3cec8eb91d8b92c2ec87c44908ac978e766befa"
+  },
+  {
+    "index": 58,
+    "timestamp": "2026-10-20T20:16:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "cd4d2e482ac02cbfff7c91875cb279eded43d6756f7e73c40c2f7ff604163a89",
+      "commit_code": "cd4d2e48",
+      "deadline": "2026-10-24T21:00:00Z",
+      "reveal_until": "2026-10-24T21:15:00Z"
+    },
+    "prev_hash": "51dca569541a22612e9e3b72f3cec8eb91d8b92c2ec87c44908ac978e766befa",
+    "hash": "d9dfe79e7627e40c950285543cbf8e60972879244bb428aef1fc527c7885f9b2"
+  },
+  {
+    "index": 59,
+    "timestamp": "2026-10-20T21:08:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "40012945d62267fb155e0a8c63109ab44dea3a5a08aca4a51a688526b624324e",
+      "commit_code": "40012945",
+      "handle": "@dividendgiulia",
+      "ticker": "TSLA",
+      "direction": "UP",
+      "target": "347.51",
+      "deadline": "2026-10-20T21:00:00Z",
+      "nonce": "09e9d71b032b3f2a0e447062fd130132",
+      "price_at_commit": 337.92,
+      "price_at_deadline": 348.71,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "d9dfe79e7627e40c950285543cbf8e60972879244bb428aef1fc527c7885f9b2",
+    "hash": "ef811a39df0276c4763438f8afc264f7596c93c1b21aedf2e84f3cf2224a6d35"
+  },
+  {
+    "index": 60,
+    "timestamp": "2026-10-21T15:02:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "430d70ce6f0868acdf2a8bf42492a1048aa664bbc634a6302aa64d92d9e2442d",
+      "commit_code": "430d70ce",
+      "deadline": "2026-10-25T21:00:00Z",
+      "reveal_until": "2026-10-25T21:15:00Z"
+    },
+    "prev_hash": "ef811a39df0276c4763438f8afc264f7596c93c1b21aedf2e84f3cf2224a6d35",
+    "hash": "8086907a139e04e8a2fa5e833d22598edba782b3541719599dc172b59e7de05d"
+  },
+  {
+    "index": 61,
+    "timestamp": "2026-10-23T05:38:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "b388e37736be261f370172a11f78525070de63f3b1513f345d4a7bd2f7b1cc64",
+      "commit_code": "b388e377",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "8086907a139e04e8a2fa5e833d22598edba782b3541719599dc172b59e7de05d",
+    "hash": "d0fc2c6f9e588ebe3b8d0d31b9cf8582fbbfecb87eb4dd5538003e28872d5521"
+  },
+  {
+    "index": 62,
+    "timestamp": "2026-10-23T05:38:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "30f5adfd0c768485fb8fc67beb83d6c156615fa1f68c1eff30d10807c67e56c3",
+      "commit_code": "30f5adfd",
+      "deadline": "2026-10-29T21:00:00Z",
+      "reveal_until": "2026-10-29T21:15:00Z"
+    },
+    "prev_hash": "d0fc2c6f9e588ebe3b8d0d31b9cf8582fbbfecb87eb4dd5538003e28872d5521",
+    "hash": "9ce29a96310050904544dff3e0fcfa59c4f177034cbeba3f2b5940a6d7a24d27"
+  },
+  {
+    "index": 63,
+    "timestamp": "2026-10-23T17:50:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "d196107a8c8011e3154abe3dcfac8d07198338b15a8395b863b676a558e58fda",
+      "commit_code": "d196107a",
+      "deadline": "2026-10-28T21:00:00Z",
+      "reveal_until": "2026-10-28T21:15:00Z"
+    },
+    "prev_hash": "9ce29a96310050904544dff3e0fcfa59c4f177034cbeba3f2b5940a6d7a24d27",
+    "hash": "246a21d5bf3f9b433cbeec3179bf0e5991d1049fc9f7c8fd35b2dde239947de1"
+  },
+  {
+    "index": 64,
+    "timestamp": "2026-10-24T18:08:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@moonshotmarco",
+      "commit_hash": "e9d91e45a2041a9da9cbfdaa6c389bb8a96fb31c63264438fd1421838c467335",
+      "commit_code": "e9d91e45",
+      "deadline": "2026-10-26T21:00:00Z",
+      "reveal_until": "2026-10-26T21:15:00Z"
+    },
+    "prev_hash": "246a21d5bf3f9b433cbeec3179bf0e5991d1049fc9f7c8fd35b2dde239947de1",
+    "hash": "9bf8be9637ec0966570a089d4baea27708f44ed5e604ff2069077ca14664052f"
+  },
+  {
+    "index": 65,
+    "timestamp": "2026-10-25T21:02:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "cd4d2e482ac02cbfff7c91875cb279eded43d6756f7e73c40c2f7ff604163a89",
+      "commit_code": "cd4d2e48",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "9bf8be9637ec0966570a089d4baea27708f44ed5e604ff2069077ca14664052f",
+    "hash": "a0610118400b9fd6ee93e80a31765cc11fdfc2edc00eb270bbacf3f020289027"
+  },
+  {
+    "index": 66,
+    "timestamp": "2026-10-25T21:02:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "430d70ce6f0868acdf2a8bf42492a1048aa664bbc634a6302aa64d92d9e2442d",
+      "commit_code": "430d70ce",
+      "handle": "@moonshotmarco",
+      "ticker": "BTC-USD",
+      "direction": "DOWN",
+      "target": "102868.01",
+      "deadline": "2026-10-25T21:00:00Z",
+      "nonce": "6cc82107b825cb1904115783635b2543",
+      "price_at_commit": 103551.52,
+      "price_at_deadline": 103348.05,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "a0610118400b9fd6ee93e80a31765cc11fdfc2edc00eb270bbacf3f020289027",
+    "hash": "00988be7f9e0b7a1c3d42773d8c79178f62c775b1503b59b4109bf345fdd2920"
+  },
+  {
+    "index": 67,
+    "timestamp": "2026-10-25T21:04:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "3f1769b7b35cdba2fcb29a3757d7804f1e579041f50e7dfa88f8aefabfd3b0c5",
+      "commit_code": "3f1769b7",
+      "deadline": "2026-10-30T21:00:00Z",
+      "reveal_until": "2026-10-30T21:15:00Z"
+    },
+    "prev_hash": "00988be7f9e0b7a1c3d42773d8c79178f62c775b1503b59b4109bf345fdd2920",
+    "hash": "fec0f629b471be2e4c3a1faf5c6df03765142539c5715e39cca1b9a536c30536"
+  },
+  {
+    "index": 68,
+    "timestamp": "2026-10-25T21:04:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "77537c31aded672263fb744e36c2d4858eeb75a10e5ba81e84d9b80bdaef406e",
+      "commit_code": "77537c31",
+      "handle": "@cryptokingmax",
+      "ticker": "ETH-USD",
+      "direction": "UP",
+      "target": "3089.18",
+      "deadline": "2026-10-25T21:00:00Z",
+      "nonce": "62e04d1c58a84504d395c67b1e805105",
+      "price_at_commit": 3016.59,
+      "price_at_deadline": 3242.89,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "fec0f629b471be2e4c3a1faf5c6df03765142539c5715e39cca1b9a536c30536",
+    "hash": "6c463497c6b26725bdf28115c02fdda9bb0b3c0c0f347b21e68b24510b989411"
+  },
+  {
+    "index": 69,
+    "timestamp": "2026-10-26T19:37:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@dividendgiulia",
+      "commit_hash": "179a92399e6887f80a2fed0f94add19ffd996fcb8537d82f496aaf54a40d7c06",
+      "commit_code": "179a9239",
+      "deadline": "2026-10-31T21:00:00Z",
+      "reveal_until": "2026-10-31T21:15:00Z"
+    },
+    "prev_hash": "6c463497c6b26725bdf28115c02fdda9bb0b3c0c0f347b21e68b24510b989411",
+    "hash": "71a27b532b07d48726f7b639db69bb25587803d84dbcd698b79e0ea3f89f7085"
+  },
+  {
+    "index": 70,
+    "timestamp": "2026-10-26T21:01:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "e9d91e45a2041a9da9cbfdaa6c389bb8a96fb31c63264438fd1421838c467335",
+      "commit_code": "e9d91e45",
+      "handle": "@moonshotmarco",
+      "ticker": "SOL-USD",
+      "direction": "DOWN",
+      "target": "122.68",
+      "deadline": "2026-10-26T21:00:00Z",
+      "nonce": "b469ba3e4c01158734367fdba53238f5",
+      "price_at_commit": 125.2,
+      "price_at_deadline": 125.81,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "71a27b532b07d48726f7b639db69bb25587803d84dbcd698b79e0ea3f89f7085",
+    "hash": "8e6c64a6f1626521244f1f685f37bd0884df6ab73765465f64deda0209674405"
+  },
+  {
+    "index": 71,
+    "timestamp": "2026-10-28T00:43:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "82595ea2aa187cfdedaa37bc99c04bb25b4cb668473a7f11751862cfd7e08186",
+      "commit_code": "82595ea2",
+      "deadline": "2026-11-01T21:00:00Z",
+      "reveal_until": "2026-11-01T21:15:00Z"
+    },
+    "prev_hash": "8e6c64a6f1626521244f1f685f37bd0884df6ab73765465f64deda0209674405",
+    "hash": "2fa77bd99a33af6dd759aef18d5abed46d9204e6bcf052bc2a761feec07c6bd0"
+  },
+  {
+    "index": 72,
+    "timestamp": "2026-10-28T21:02:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "d196107a8c8011e3154abe3dcfac8d07198338b15a8395b863b676a558e58fda",
+      "commit_code": "d196107a",
+      "handle": "@moonshotmarco",
+      "ticker": "BTC-USD",
+      "direction": "UP",
+      "target": "103686.79",
+      "deadline": "2026-10-28T21:00:00Z",
+      "nonce": "21a7dff6f891255fc19337fd039db5d2",
+      "price_at_commit": 101932.02,
+      "price_at_deadline": 97637.81,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "2fa77bd99a33af6dd759aef18d5abed46d9204e6bcf052bc2a761feec07c6bd0",
+    "hash": "30e401ce2106270a5c3d24a72681bbe3e060c7edd26e6cce52a86aa0b0115a78"
+  },
+  {
+    "index": 73,
+    "timestamp": "2026-10-29T23:47:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "30f5adfd0c768485fb8fc67beb83d6c156615fa1f68c1eff30d10807c67e56c3",
+      "commit_code": "30f5adfd",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "30e401ce2106270a5c3d24a72681bbe3e060c7edd26e6cce52a86aa0b0115a78",
+    "hash": "a3d428d2bdeea55c37710470b16a9760b2c87e75c2864cc56556c43eb7345f70"
+  },
+  {
+    "index": 74,
+    "timestamp": "2026-10-29T23:47:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "8e370a027fafc34f4e646a35a70060afed1c7079f9ca7115faeffda0ad836091",
+      "commit_code": "8e370a02",
+      "deadline": "2026-11-01T21:00:00Z",
+      "reveal_until": "2026-11-01T21:15:00Z"
+    },
+    "prev_hash": "a3d428d2bdeea55c37710470b16a9760b2c87e75c2864cc56556c43eb7345f70",
+    "hash": "cdc3fb9d12ea1da6c0e33271e36bf1ef5d4da131fcaf3d17c5754a24c94117fa"
+  },
+  {
+    "index": 75,
+    "timestamp": "2026-10-31T10:15:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "3f1769b7b35cdba2fcb29a3757d7804f1e579041f50e7dfa88f8aefabfd3b0c5",
+      "commit_code": "3f1769b7",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "cdc3fb9d12ea1da6c0e33271e36bf1ef5d4da131fcaf3d17c5754a24c94117fa",
+    "hash": "2ea523a7abbc663c0092fee30711c03ad74af185bda196566a85ed435616117f"
+  },
+  {
+    "index": 76,
+    "timestamp": "2026-10-31T10:15:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "d13963b3a2ffd09e6ea00f672f4d19f96c0313a088313f7b0be0f28d1d9cee27",
+      "commit_code": "d13963b3",
+      "deadline": "2026-11-03T21:00:00Z",
+      "reveal_until": "2026-11-03T21:15:00Z"
+    },
+    "prev_hash": "2ea523a7abbc663c0092fee30711c03ad74af185bda196566a85ed435616117f",
+    "hash": "fb1dbb6e7310e9c6d4aa9a766da75cb0a789532910f751815ae96f2b2997d25a"
+  },
+  {
+    "index": 77,
+    "timestamp": "2026-10-31T21:08:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "179a92399e6887f80a2fed0f94add19ffd996fcb8537d82f496aaf54a40d7c06",
+      "commit_code": "179a9239",
+      "handle": "@dividendgiulia",
+      "ticker": "AAPL",
+      "direction": "UP",
+      "target": "202.14",
+      "deadline": "2026-10-31T21:00:00Z",
+      "nonce": "972385693bd1e85e0e0d7ddb0190c578",
+      "price_at_commit": 198.8,
+      "price_at_deadline": 221.03,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "fb1dbb6e7310e9c6d4aa9a766da75cb0a789532910f751815ae96f2b2997d25a",
+    "hash": "5b84aa73d9f102b4638c1a2a9ba06649218ac57f2748ddb85898e8656be95eb1"
+  },
+  {
+    "index": 78,
+    "timestamp": "2026-11-01T21:02:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "8e370a027fafc34f4e646a35a70060afed1c7079f9ca7115faeffda0ad836091",
+      "commit_code": "8e370a02",
+      "handle": "@valuevera",
+      "ticker": "ENI.MI",
+      "direction": "DOWN",
+      "target": "14.26",
+      "deadline": "2026-11-01T21:00:00Z",
+      "nonce": "4d077c79d69661226c523ecf083238fc",
+      "price_at_commit": 14.5,
+      "price_at_deadline": 14.18,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "5b84aa73d9f102b4638c1a2a9ba06649218ac57f2748ddb85898e8656be95eb1",
+    "hash": "ec95f37fc220cf879060330c747896bf8e8704d95f10243e9fb522d96c7a3ef7"
+  },
+  {
+    "index": 79,
+    "timestamp": "2026-11-01T21:05:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "82595ea2aa187cfdedaa37bc99c04bb25b4cb668473a7f11751862cfd7e08186",
+      "commit_code": "82595ea2",
+      "handle": "@cryptokingmax",
+      "ticker": "SOL-USD",
+      "direction": "DOWN",
+      "target": "117.67",
+      "deadline": "2026-11-01T21:00:00Z",
+      "nonce": "70cc51fd97db8c331ce412237f015204",
+      "price_at_commit": 121.3,
+      "price_at_deadline": 117.09,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "ec95f37fc220cf879060330c747896bf8e8704d95f10243e9fb522d96c7a3ef7",
+    "hash": "4bc2bda52e3e86c202709f51f5dabe692423e7f539962a29ab8266b7562d0380"
+  },
+  {
+    "index": 80,
+    "timestamp": "2026-11-02T10:00:00Z",
+    "type": "VERIFY",
+    "data": {
+      "handle": "@valuevera",
+      "plan": "Verified monthly",
+      "price_eur": 9.99,
+      "valid_until": "2026-12-02T10:00:00Z"
+    },
+    "prev_hash": "4bc2bda52e3e86c202709f51f5dabe692423e7f539962a29ab8266b7562d0380",
+    "hash": "5940b0cff183b4ae52564929423c45d7715b6509f01e0d4a9d66e4083633091a"
+  },
+  {
+    "index": 81,
+    "timestamp": "2026-11-02T10:58:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "e40c899efc84d775ab83cfe5e6907ef7f2c1ce363cc64b8363cc3ca97e0c6dba",
+      "commit_code": "e40c899e",
+      "deadline": "2026-11-03T21:00:00Z",
+      "reveal_until": "2026-11-03T21:15:00Z"
+    },
+    "prev_hash": "5940b0cff183b4ae52564929423c45d7715b6509f01e0d4a9d66e4083633091a",
+    "hash": "eb2ba2f0db3cb18c131f3059f74191a9f4cc52a925f32ee3356bda5902107d28"
+  },
+  {
+    "index": 82,
+    "timestamp": "2026-11-02T12:18:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "1d54a159f434d798597a2aacce32cb21a4f7304ec737065980c7cd1b072a0a73",
+      "commit_code": "1d54a159",
+      "deadline": "2026-11-08T21:00:00Z",
+      "reveal_until": "2026-11-08T21:15:00Z"
+    },
+    "prev_hash": "eb2ba2f0db3cb18c131f3059f74191a9f4cc52a925f32ee3356bda5902107d28",
+    "hash": "99b5eaf53c4e67b88596f0b724443055296a7d66818fcf1fef601451eb39ecf6"
+  },
+  {
+    "index": 83,
+    "timestamp": "2026-11-02T18:57:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "b25d4ef3a773a3c14c049e159f700234cf7f3501b4189f9ac769007bf65b07b5",
+      "commit_code": "b25d4ef3",
+      "deadline": "2026-11-06T21:00:00Z",
+      "reveal_until": "2026-11-06T21:15:00Z"
+    },
+    "prev_hash": "99b5eaf53c4e67b88596f0b724443055296a7d66818fcf1fef601451eb39ecf6",
+    "hash": "c3abe7e6f511e558b72d2bc1c7496eddb35c97ee41acff0fe80c00413c7af2a8"
+  },
+  {
+    "index": 84,
+    "timestamp": "2026-11-03T11:20:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "0ccfe9867820c62beb8c5ceaadb8cddf0461c52ed0353d937718fe3a602954b7",
+      "commit_code": "0ccfe986",
+      "deadline": "2026-11-09T21:00:00Z",
+      "reveal_until": "2026-11-09T21:15:00Z"
+    },
+    "prev_hash": "c3abe7e6f511e558b72d2bc1c7496eddb35c97ee41acff0fe80c00413c7af2a8",
+    "hash": "38fcf7542f33cc60bcef84fac7c7f5c6ea2400ac1922795de54e4fe9c13980e1"
+  },
+  {
+    "index": 85,
+    "timestamp": "2026-11-03T21:04:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "d13963b3a2ffd09e6ea00f672f4d19f96c0313a088313f7b0be0f28d1d9cee27",
+      "commit_code": "d13963b3",
+      "handle": "@valuevera",
+      "ticker": "TSLA",
+      "direction": "UP",
+      "target": "342.35",
+      "deadline": "2026-11-03T21:00:00Z",
+      "nonce": "defe7f41fdccc4e7944a4fea1ef6ecf9",
+      "price_at_commit": 340.06,
+      "price_at_deadline": 346.13,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "38fcf7542f33cc60bcef84fac7c7f5c6ea2400ac1922795de54e4fe9c13980e1",
+    "hash": "304cf478341bd3dcd956c803322c59e9d51e904494b2afe6311ebcf38fd1a31f"
+  },
+  {
+    "index": 86,
+    "timestamp": "2026-11-03T21:07:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "e40c899efc84d775ab83cfe5e6907ef7f2c1ce363cc64b8363cc3ca97e0c6dba",
+      "commit_code": "e40c899e",
+      "handle": "@valuevera",
+      "ticker": "BTC-USD",
+      "direction": "DOWN",
+      "target": "89155.93",
+      "deadline": "2026-11-03T21:00:00Z",
+      "nonce": "7c770d97de47c8ee2120e29dc7624e27",
+      "price_at_commit": 90158.7,
+      "price_at_deadline": 90095.9,
+      "price_source": "Simulated market (offline demo)",
+      "correct": false
+    },
+    "prev_hash": "304cf478341bd3dcd956c803322c59e9d51e904494b2afe6311ebcf38fd1a31f",
+    "hash": "9986db29eb3d87facf522ec27204c68006dd30278fed38986732d3a0fa25da67"
+  },
+  {
+    "index": 87,
+    "timestamp": "2026-11-04T13:51:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "213bbb8fbe3a285e474072e4cd3a9636b0763a2c9184f35bf8c3952d7f8ec57f",
+      "commit_code": "213bbb8f",
+      "deadline": "2026-11-06T21:00:00Z",
+      "reveal_until": "2026-11-06T21:15:00Z"
+    },
+    "prev_hash": "9986db29eb3d87facf522ec27204c68006dd30278fed38986732d3a0fa25da67",
+    "hash": "cfbe14d84702a063a56ed1193d5c8a1c1b9784953165a1beee29f8d72f7330ab"
+  },
+  {
+    "index": 88,
+    "timestamp": "2026-11-06T21:03:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "b25d4ef3a773a3c14c049e159f700234cf7f3501b4189f9ac769007bf65b07b5",
+      "commit_code": "b25d4ef3",
+      "handle": "@cryptokingmax",
+      "ticker": "ETH-USD",
+      "direction": "UP",
+      "target": "3037.71",
+      "deadline": "2026-11-06T21:00:00Z",
+      "nonce": "a9783e377983f9e4bc6c0a88447225ec",
+      "price_at_commit": 3004.17,
+      "price_at_deadline": 3093.31,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "cfbe14d84702a063a56ed1193d5c8a1c1b9784953165a1beee29f8d72f7330ab",
+    "hash": "4da0196a8a5af15ec7390273cbf04a7a2d6ccac653d6726ce382af15039eb557"
+  },
+  {
+    "index": 89,
+    "timestamp": "2026-11-06T21:04:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "213bbb8fbe3a285e474072e4cd3a9636b0763a2c9184f35bf8c3952d7f8ec57f",
+      "commit_code": "213bbb8f",
+      "handle": "@valuevera",
+      "ticker": "ENI.MI",
+      "direction": "UP",
+      "target": "14.60",
+      "deadline": "2026-11-06T21:00:00Z",
+      "nonce": "68ee94c715f63f622bb3677c652e3045",
+      "price_at_commit": 14.5,
+      "price_at_deadline": 14.66,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "4da0196a8a5af15ec7390273cbf04a7a2d6ccac653d6726ce382af15039eb557",
+    "hash": "e85fb2d7dc7144aae3de8e266bccb046b6aae898f098d75fd0f1b0caee59c151"
+  },
+  {
+    "index": 90,
+    "timestamp": "2026-11-08T12:21:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "e617806ce27244b3549e9aad51554a1afb8944b7bf14ed4d337d14bd69f18b9b",
+      "commit_code": "e617806c",
+      "deadline": "2026-11-14T21:00:00Z",
+      "reveal_until": "2026-11-14T21:15:00Z"
+    },
+    "prev_hash": "e85fb2d7dc7144aae3de8e266bccb046b6aae898f098d75fd0f1b0caee59c151",
+    "hash": "af9b3f89e1ab53043cc3f9d9e333bc7a71226255acc7b07b7df562f3e73daf3d"
+  },
+  {
+    "index": 91,
+    "timestamp": "2026-11-08T21:03:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "1d54a159f434d798597a2aacce32cb21a4f7304ec737065980c7cd1b072a0a73",
+      "commit_code": "1d54a159",
+      "handle": "@cryptokingmax",
+      "ticker": "TSLA",
+      "direction": "UP",
+      "target": "349.54",
+      "deadline": "2026-11-08T21:00:00Z",
+      "nonce": "aa9abe8086e72d01129c07ba563183ba",
+      "price_at_commit": 345.02,
+      "price_at_deadline": 369.0,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "af9b3f89e1ab53043cc3f9d9e333bc7a71226255acc7b07b7df562f3e73daf3d",
+    "hash": "f23dae9df212243447c81eb3aca0a83a306227a47e4c33f722d39ab43adc91c5"
+  },
+  {
+    "index": 92,
+    "timestamp": "2026-11-09T21:02:00Z",
+    "type": "REVEAL",
+    "data": {
+      "commit_hash": "0ccfe9867820c62beb8c5ceaadb8cddf0461c52ed0353d937718fe3a602954b7",
+      "commit_code": "0ccfe986",
+      "handle": "@valuevera",
+      "ticker": "TSLA",
+      "direction": "UP",
+      "target": "343.25",
+      "deadline": "2026-11-09T21:00:00Z",
+      "nonce": "20914a2c358dd0a7576a1e234081cd29",
+      "price_at_commit": 337.77,
+      "price_at_deadline": 381.62,
+      "price_source": "Simulated market (offline demo)",
+      "correct": true
+    },
+    "prev_hash": "f23dae9df212243447c81eb3aca0a83a306227a47e4c33f722d39ab43adc91c5",
+    "hash": "f525ee40dab584dfeeea920bf451f805fe76982d776d40ef8cea9737e7bd17c4"
+  },
+  {
+    "index": 93,
+    "timestamp": "2026-11-10T01:51:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "ba27d358aa847da558d7e6e74b5f25db2c68f3e43f143f9d0ee38a3dfcdf8bd4",
+      "commit_code": "ba27d358",
+      "deadline": "2026-11-13T21:00:00Z",
+      "reveal_until": "2026-11-13T21:15:00Z"
+    },
+    "prev_hash": "f525ee40dab584dfeeea920bf451f805fe76982d776d40ef8cea9737e7bd17c4",
+    "hash": "b946b2ca0979d7488ac0dc67ba5b140e489d95e78be5bccddf5a0fa15ae9c7ee"
+  },
+  {
+    "index": 94,
+    "timestamp": "2026-11-10T11:35:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "5897aa471ad220f792b2ec44ff3abee167cc403096ab4d13fcedba9fe1ae6f87",
+      "commit_code": "5897aa47",
+      "deadline": "2026-11-16T21:00:00Z",
+      "reveal_until": "2026-11-16T21:15:00Z"
+    },
+    "prev_hash": "b946b2ca0979d7488ac0dc67ba5b140e489d95e78be5bccddf5a0fa15ae9c7ee",
+    "hash": "861d7ce86224ea15492e3d3a5ef3d1bf2ed91f8fd1cfec6d5faf4b84d96e3da2"
+  },
+  {
+    "index": 95,
+    "timestamp": "2026-11-10T15:00:00Z",
+    "type": "VERIFY",
+    "data": {
+      "handle": "@dividendgiulia",
+      "plan": "Verified monthly",
+      "price_eur": 9.99,
+      "valid_until": "2026-12-10T15:00:00Z"
+    },
+    "prev_hash": "861d7ce86224ea15492e3d3a5ef3d1bf2ed91f8fd1cfec6d5faf4b84d96e3da2",
+    "hash": "b631ee1a72b55071814be1115aec35b3f291e2e526730e0a2a7c2c9be10938f7"
+  },
+  {
+    "index": 96,
+    "timestamp": "2026-11-18T16:30:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "5897aa471ad220f792b2ec44ff3abee167cc403096ab4d13fcedba9fe1ae6f87",
+      "commit_code": "5897aa47",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "b631ee1a72b55071814be1115aec35b3f291e2e526730e0a2a7c2c9be10938f7",
+    "hash": "c9bd8e7ef6a076612a6574e3330498b63674838d85a1805e4dd17c865f467367"
+  },
+  {
+    "index": 97,
+    "timestamp": "2026-11-18T16:30:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "ba27d358aa847da558d7e6e74b5f25db2c68f3e43f143f9d0ee38a3dfcdf8bd4",
+      "commit_code": "ba27d358",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "c9bd8e7ef6a076612a6574e3330498b63674838d85a1805e4dd17c865f467367",
+    "hash": "4ff85918fb7eaa38797b6f2d5600efdab0f40e7e9dd3a3260c420e73512a6306"
+  },
+  {
+    "index": 98,
+    "timestamp": "2026-11-18T16:30:00Z",
+    "type": "EXPIRE",
+    "data": {
+      "commit_hash": "e617806ce27244b3549e9aad51554a1afb8944b7bf14ed4d337d14bd69f18b9b",
+      "commit_code": "e617806c",
+      "handle": "@cryptokingmax",
+      "reason": "Not revealed within the reveal window"
+    },
+    "prev_hash": "4ff85918fb7eaa38797b6f2d5600efdab0f40e7e9dd3a3260c420e73512a6306",
+    "hash": "d9a5dc18fb6a0371c5aac2340fea3f3a9f7f2178e62d3fc3d29f36f91c236e8e"
+  },
+  {
+    "index": 99,
+    "timestamp": "2026-11-18T16:30:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@valuevera",
+      "commit_hash": "bc66c3589dbd9fb70de95fead185ed0bd359acd90dd4b9ad20b9ffdf43f01267",
+      "commit_code": "bc66c358",
+      "deadline": "2026-11-27T21:00:00Z",
+      "reveal_until": "2026-11-27T21:15:00Z"
+    },
+    "prev_hash": "d9a5dc18fb6a0371c5aac2340fea3f3a9f7f2178e62d3fc3d29f36f91c236e8e",
+    "hash": "0a02c6101be04695228b6427bf8e8581025ea5abecef19f0822ce0a87160b9db"
+  },
+  {
+    "index": 100,
+    "timestamp": "2026-11-18T16:30:00Z",
+    "type": "COMMIT",
+    "data": {
+      "handle": "@cryptokingmax",
+      "commit_hash": "ed200b81bcd8afa58433863969696b15655693bed2ec1da1c33748c300702738",
+      "commit_code": "ed200b81",
+      "deadline": "2026-11-27T21:00:00Z",
+      "reveal_until": "2026-11-27T21:15:00Z"
+    },
+    "prev_hash": "0a02c6101be04695228b6427bf8e8581025ea5abecef19f0822ce0a87160b9db",
+    "hash": "fad6d45242b4861a241c5b6c75e9bcdec4cd1af5d9371abcad68ce3c7ada41ee"
+  }
+]
