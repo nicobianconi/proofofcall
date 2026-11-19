@@ -61,7 +61,7 @@ ADMIN_PASSWORD_SECRET_NAME = "ADMIN_PASSWORD"
 # LIVE DEMO: same logic, shrunk to minutes so it can be shown in class.
 #   - the call settles at the exact deadline minute
 #   - the target must be at least 0.1% away (crypto moves ~0.1-0.5% in 10 minutes)
-#   - 30 minutes to reveal
+#   - 1 hour to reveal
 
 CALL_TYPES = {
     "standard": {
@@ -72,7 +72,7 @@ CALL_TYPES = {
     "demo": {
         "label": "Live demo (deadline in minutes)",
         "min_target_distance": 0.001,     # 0.1%
-        "reveal_window_minutes": 30,
+        "reveal_window_minutes": 60,
     },
 }
 
