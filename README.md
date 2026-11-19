@@ -41,7 +41,7 @@ On the first launch, the ledger database (`ledger.db`) is filled with demo data
 - **Standard calls** settle at the **close of the deadline day** (last price before 22:00 Italian
   time, i.e. after the US close). The target must be **at least 2% away** from the price at commit
   time, in the predicted direction. 24 hours to reveal.
-- **Live demo calls** use the same logic shrunk to minutes (target ≥ 0.1% away, 15 minutes to reveal),
+- **Live demo calls** use the same logic shrunk to minutes (target ≥ 0.1% away, 30 minutes to reveal),
   so the product can be demonstrated in class.
 - **Unrevealed or invalid calls count as wrong.** The 2% rule is checked at commit time and again at
   reveal time with the official price at commit time.

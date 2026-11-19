@@ -213,6 +213,62 @@ def verify_chain(chain: list) -> tuple:
     return True, f"All {len(chain)} blocks are intact and correctly linked."
 
 
+def simulate_tampering_step_by_step(chain: list):
+    """
+    Demo helper for the visual "Try to cheat" section. Works on COPIES only.
+
+    Finds the most recent REVEAL block of a WRONG call and simulates two attacks:
+
+    Attack 1 - edit the result only:
+        "correct": false -> true. The block's content no longer matches its hash.
+
+    Attack 2 - edit the result AND recompute that block's hash (a smarter cheater):
+        the block looks fine on its own, but the NEXT block still stores the old
+        hash as "prev_hash", so the link between the two is broken.
+
+    Returns a dict with everything the app needs to draw it, or None if there is
+    no wrong call to tamper with.
+    """
+    target_position = None
+    for position in range(len(chain) - 1, 0, -1):
+        block = chain[position]
+        if block["type"] == "REVEAL" and block["data"].get("correct") is False:
+            target_position = position
+            break
+
+    # We need a block AFTER the target to show the broken link
+    if target_position is None or target_position == len(chain) - 1:
+        return None
+
+    original_block = chain[target_position]
+
+    # Attack 1: change the result, keep the old hash
+    attack_1_block = copy.deepcopy(original_block)
+    attack_1_block["data"]["correct"] = True
+    attack_1_recomputed_hash = compute_block_hash(attack_1_block)
+
+    # Attack 2: change the result AND recompute the hash
+    attack_2_block = copy.deepcopy(attack_1_block)
+    attack_2_block["hash"] = attack_1_recomputed_hash
+    next_block = chain[target_position + 1]
+
+    attack_1_chain = copy.deepcopy(chain)
+    attack_1_chain[target_position] = attack_1_block
+    attack_2_chain = copy.deepcopy(chain)
+    attack_2_chain[target_position] = attack_2_block
+
+    return {
+        "position": target_position,
+        "original_block": original_block,
+        "tampered_block": attack_1_block,
+        "stored_hash": original_block["hash"],
+        "recomputed_hash": attack_1_recomputed_hash,
+        "next_block": next_block,
+        "attack_1_result": verify_chain(attack_1_chain),
+        "attack_2_result": verify_chain(attack_2_chain),
+    }
+
+
 def simulate_tampering(chain: list) -> tuple:
     """
     Demo helper: on a COPY of the chain, try to turn a wrong call into a correct one,

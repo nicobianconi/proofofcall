@@ -569,6 +569,126 @@ def page_profile():
 
 
 # ===========================================================================
+# Visual tampering demo (used by the Ledger explorer page)
+# ===========================================================================
+
+GREEN = "#2e7d32"
+RED = "#c62828"
+ORANGE = "#ef6c00"
+GREY = "#616161"
+
+
+def block_box_html(block: dict, colour: str, note: str) -> str:
+    """One block of the chain drawn as a coloured box."""
+    return f"""
+    <div style="border: 3px solid {colour}; border-radius: 10px; padding: 10px 12px;
+                min-width: 135px; background: rgba(255,255,255,0.03); font-size: 0.85rem;">
+        <div style="font-weight: 700; font-size: 1rem;">#{block['index']} · {block['type']}</div>
+        <div style="font-family: monospace; margin-top: 4px;">prev: {block['prev_hash'][:8]}…</div>
+        <div style="font-family: monospace;">hash: {block['hash'][:8]}…</div>
+        <div style="margin-top: 6px; color: {colour}; font-weight: 700;">{note}</div>
+    </div>"""
+
+
+def link_html(colour: str, label: str) -> str:
+    """The arrow between two blocks."""
+    return f"""
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;
+                color: {colour}; font-weight: 700; min-width: 60px; font-size: 0.75rem;">
+        <div style="font-size: 1.8rem; line-height: 1;">⟶</div>
+        <div>{label}</div>
+    </div>"""
+
+
+def chain_strip_html(blocks: list, block_styles: list, link_styles: list) -> str:
+    """
+    A row of blocks joined by arrows.
+    block_styles[i] = (colour, note) for blocks[i]
+    link_styles[i]  = (colour, label) for the arrow BEFORE blocks[i + 1]
+    """
+    parts = []
+    for position, block in enumerate(blocks):
+        if position > 0:
+            parts.append(link_html(*link_styles[position - 1]))
+        parts.append(block_box_html(block, *block_styles[position]))
+    return ('<div style="display: flex; align-items: stretch; gap: 6px; overflow-x: auto; '
+            'padding: 6px 0 12px 0;">' + "".join(parts) + "</div>")
+
+
+def show_tampering_demo(chain: list):
+    """Draw the two attacks of ledger.simulate_tampering_step_by_step()."""
+    demo = ledger.simulate_tampering_step_by_step(chain)
+    if demo is None:
+        st.info("There is no wrong call to tamper with yet. Reveal a wrong call first.")
+        return
+
+    position = demo["position"]
+    original = demo["original_block"]
+    tampered = demo["tampered_block"]
+    next_block = demo["next_block"]
+    previous_block = chain[position - 1]
+    after_next = chain[position + 2] if position + 2 < len(chain) else None
+
+    # --- Step 0: the honest chain --------------------------------------------
+    st.markdown("**Step 0 · The honest ledger.** Each block stores the hash of the block before it.")
+    blocks = [previous_block, original, next_block] + ([after_next] if after_next else [])
+    st.markdown(chain_strip_html(
+        blocks,
+        [(GREEN, "✓ intact")] * len(blocks),
+        [(GREEN, "linked")] * (len(blocks) - 1),
+    ), unsafe_allow_html=True)
+
+    # --- Step 1: change the result -------------------------------------------
+    st.markdown(f"**Step 1 · The cheat.** In block #{position}, a WRONG call by "
+                f"{original['data']['handle']} is changed to CORRECT.")
+
+    fields = ["handle", "ticker", "direction", "target", "price_at_deadline", "correct"]
+    rows = ""
+    for field in fields:
+        before = original["data"].get(field)
+        after = tampered["data"].get(field)
+        changed = before != after
+        style = f"background: {RED}; color: white; font-weight: 700;" if changed else ""
+        rows += (f"<tr style='{style}'><td style='padding:4px 10px'>{field}</td>"
+                 f"<td style='padding:4px 10px'>{before}</td><td style='padding:4px 10px'>{after}</td></tr>")
+    st.markdown(
+        "<table style='border-collapse: collapse; font-family: monospace; font-size: 0.9rem;'>"
+        "<tr><th style='padding:4px 10px; text-align:left'>field</th>"
+        "<th style='padding:4px 10px; text-align:left'>original</th>"
+        "<th style='padding:4px 10px; text-align:left'>tampered</th></tr>"
+        f"{rows}</table>", unsafe_allow_html=True)
+
+    st.markdown("&nbsp;", unsafe_allow_html=True)
+    column_1, column_2 = st.columns(2)
+    column_1.markdown("Hash **stored** in the block")
+    column_1.code(demo["stored_hash"], language=None)
+    column_2.markdown("Hash **recomputed** from the edited content")
+    column_2.code(demo["recomputed_hash"], language=None)
+    st.error("❌ The two hashes are different: the edit is detected. " + demo["attack_1_result"][1])
+
+    st.markdown(chain_strip_html(
+        blocks,
+        [(GREEN, "✓ intact"), (RED, "✗ content ≠ hash"), (GREEN, "✓ intact")] + ([(GREEN, "✓ intact")] if after_next else []),
+        [(GREEN, "linked"), (GREEN, "linked")] + ([(GREEN, "linked")] if after_next else []),
+    ), unsafe_allow_html=True)
+
+    # --- Step 2: the smarter cheater recomputes the hash ----------------------
+    st.markdown(f"**Step 2 · A smarter cheat.** Recompute the hash of block #{position} so it looks valid again…")
+    fixed_block = dict(tampered)
+    fixed_block["hash"] = demo["recomputed_hash"]
+    blocks_attack_2 = [previous_block, fixed_block, next_block] + ([after_next] if after_next else [])
+    st.markdown(chain_strip_html(
+        blocks_attack_2,
+        [(GREEN, "✓ intact"), (ORANGE, "looks valid"), (GREY, "untrusted")] + ([(GREY, "untrusted")] if after_next else []),
+        [(GREEN, "linked"), (RED, "✗ BROKEN")] + ([(GREY, "")] if after_next else []),
+    ), unsafe_allow_html=True)
+    st.error(f"❌ …but block #{position + 1} still points to the OLD hash "
+             f"({next_block['prev_hash'][:8]}… ≠ {demo['recomputed_hash'][:8]}…). "
+             "To hide the edit, the cheater would have to rewrite every later block, "
+             "and anyone holding the latest hash would notice.")
+
+
+# ===========================================================================
 # Page: Ledger explorer
 # ===========================================================================
 
@@ -583,18 +703,19 @@ def page_ledger():
     else:
         st.error(message)
 
-    # --- Tampering demo
+    # --- Tampering demo (visual, step by step)
     st.markdown("#### 🕵️ Try to cheat")
-    st.write("Simulate a dishonest edit: turn an old WRONG call into a CORRECT one "
-             "(done on a copy, the real ledger is not touched).")
-    if st.button("Tamper with a block"):
-        block_index, (still_valid, verdict) = ledger.simulate_tampering(chain)
-        if block_index is None:
-            st.info(verdict)
-        elif still_valid:
-            st.warning(verdict)
-        else:
-            st.error(f"Edited block #{block_index} → detected immediately: {verdict}")
+    st.write("Simulate a dishonest edit: turn an old WRONG call into a CORRECT one. "
+             "It is done on a copy: the real ledger is not touched.")
+
+    column_1, column_2 = st.columns([1, 4])
+    if column_1.button("Tamper with a block", type="primary"):
+        st.session_state["show_tampering"] = True
+    if st.session_state.get("show_tampering") and column_2.button("Hide"):
+        st.session_state["show_tampering"] = False
+
+    if st.session_state.get("show_tampering"):
+        show_tampering_demo(chain)
 
     # --- Verify a commitment by hand (anyone can do it)
     st.markdown("#### 🔍 Verify a hash yourself")
