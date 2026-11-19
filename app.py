@@ -617,7 +617,7 @@ def chain_strip_html(blocks: list, block_styles: list, link_styles: list) -> str
 
 def show_tampering_demo(chain: list):
     """Draw the two attacks of ledger.simulate_tampering_step_by_step()."""
-    demo = ledger.simulate_tampering_step_by_step(chain)
+    demo = ledger.simulate_tampering_step_by_step(chain) or ledger.simulate_tampering_step_by_step(chain[:-1])
     if demo is None:
         st.info("There is no wrong call to tamper with yet. Reveal a wrong call first.")
         return
