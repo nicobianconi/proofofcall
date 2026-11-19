@@ -627,7 +627,7 @@ def show_tampering_demo(chain: list):
     tampered = demo["tampered_block"]
     next_block = demo["next_block"]
     previous_block = chain[position - 1]
-    after_next = chain[position + 2] if position + 2 < len(chain) else None
+    after_next = None  # 3 blocks fit on any screen
 
     # --- Step 0: the honest chain --------------------------------------------
     st.markdown("**Step 0 · The honest ledger.** Each block stores the hash of the block before it.")
@@ -708,7 +708,7 @@ def page_ledger():
     st.write("Simulate a dishonest edit: turn an old WRONG call into a CORRECT one. "
              "It is done on a copy: the real ledger is not touched.")
 
-    column_1, column_2 = st.columns([1, 4])
+    column_1, column_2 = st.columns([2, 3])
     if column_1.button("Tamper with a block", type="primary"):
         st.session_state["show_tampering"] = True
     if st.session_state.get("show_tampering") and column_2.button("Hide"):
