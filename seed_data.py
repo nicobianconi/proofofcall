@@ -8,13 +8,14 @@ Run it only if you want to regenerate the demo data:
 
     python seed_data.py
 
-It creates 4 fictional influencers with calls between September and November 2026,
-scored with the SIMULATED market (not real prices). Each one shows a typical behaviour:
+It creates 4 fictional influencers with STANDARD calls (settled at the daily close,
+target at least 2% away) between August and November 2026, scored with the
+SIMULATED market (not real prices). Each one shows a typical behaviour:
 
-    @valuevera      careful analyst, reveals every call, high hit rate
+    @valuevera      careful analyst, reveals every call, good hit rate
     @cryptokingmax  "hype" account: only reveals winners -> his losers expire
     @moonshotmarco  honest but not very good: reveals everything, low hit rate
-    @dividendgiulia few calls, still building a track record
+    @dividendgiulia few calls: still building a track record (under 20 calls)
 """
 
 import json
@@ -28,27 +29,50 @@ import services
 
 
 # Fixed random seed: the demo data is identical every time you run the script
-random.seed(42)
+random.seed(7)
 
 
 INFLUENCERS = [
     # handle,           name,             platform,   skill, reveals_losers, number_of_calls
-    ("@valuevera",      "Vera Rossi",     "YouTube",   0.78, True,  14),
-    ("@cryptokingmax",  "Max Crypto",     "TikTok",    0.45, False, 18),
-    ("@moonshotmarco",  "Marco Moonshot", "Telegram",  0.40, True,  10),
-    ("@dividendgiulia", "Giulia Bianchi", "Instagram", 0.65, True,  4),
+    ("@valuevera",      "Vera Rossi",     "YouTube",   0.68, True,  26),
+    ("@cryptokingmax",  "Max Crypto",     "TikTok",    0.15, False, 30),
+    ("@moonshotmarco",  "Marco Moonshot", "Telegram",  0.25, True,  22),
+    ("@dividendgiulia", "Giulia Bianchi", "Instagram", 0.65, True,  8),
 ]
 
 TICKERS = ["BTC-USD", "ETH-USD", "SOL-USD", "AAPL", "TSLA", "NVDA", "ENI.MI"]
 
-START = datetime(2026, 9, 1, 9, 0, tzinfo=timezone.utc)
-END = datetime(2026, 11, 14, 9, 0, tzinfo=timezone.utc)
+START = datetime(2026, 8, 1, 8, 0, tzinfo=timezone.utc)
+END = datetime(2026, 11, 10, 8, 0, tzinfo=timezone.utc)
 LAST_DAY = datetime(2026, 11, 18, 18, 0, tzinfo=timezone.utc)
+MIN_DISTANCE = config.CALL_TYPES["standard"]["min_target_distance"]
 
 
 def random_moment(start, end):
     seconds = int((end - start).total_seconds())
     return (start + timedelta(seconds=random.randint(0, seconds))).replace(second=0, microsecond=0)
+
+
+def choose_prediction(entry_price, future_price, skill):
+    """
+    Pick direction and target. A skilled influencer more often picks a target
+    the price really reaches. The target is always at least 2% away (valid call).
+    """
+    real_move = future_price / entry_price - 1
+    real_direction = "UP" if real_move >= 0 else "DOWN"
+
+    wants_to_be_right = random.random() < skill
+    if wants_to_be_right and abs(real_move) > MIN_DISTANCE + 0.002:
+        # A target between +2% and the real move: it will be reached
+        direction = real_direction
+        distance = random.uniform(MIN_DISTANCE + 0.001, abs(real_move) - 0.001)
+    else:
+        # A random guess: 3% - 8% in a random direction (usually not reached)
+        direction = random.choice(["UP", "DOWN"])
+        distance = random.uniform(0.03, 0.08)
+
+    target = entry_price * (1 + distance) if direction == "UP" else entry_price * (1 - distance)
+    return direction, round(target, 2)
 
 
 def plan_calls():
@@ -58,50 +82,45 @@ def plan_calls():
     for handle, _, _, skill, reveals_losers, number_of_calls in INFLUENCERS:
         for _ in range(number_of_calls):
             committed_at = random_moment(START, END)
-            deadline = (committed_at + timedelta(days=random.randint(1, 6))).replace(hour=21, minute=0)
-            ticker = random.choice(TICKERS)
 
-            price_now = prices.get_simulated_price(ticker, committed_at)
-            price_later = prices.get_simulated_price(ticker, deadline)
+            # Skilled influencers are better at picking opportunities: they look at
+            # a few tickers/horizons and keep the one with a clear move
+            attempts = 6 if random.random() < skill else 1
+            for _attempt in range(attempts):
+                deadline_day = (committed_at + timedelta(days=random.randint(1, 7))).date()
+                deadline = services.daily_close_deadline(deadline_day)
+                ticker = random.choice(TICKERS)
+                entry_price = prices.get_simulated_price(ticker, committed_at)
+                future_price = prices.get_simulated_price(ticker, deadline)
+                if abs(future_price / entry_price - 1) > MIN_DISTANCE + 0.005:
+                    break
+            direction, target = choose_prediction(entry_price, future_price, skill)
 
-            # A skilled influencer "guesses" the real direction more often
-            real_direction = "UP" if price_later >= price_now else "DOWN"
-            if random.random() < skill:
-                direction = real_direction
-            else:
-                direction = "DOWN" if real_direction == "UP" else "UP"
-
-            # Target: a small move (0.5% - 3%) in the predicted direction
-            move = random.uniform(0.005, 0.03)
-            target = price_now * (1 + move) if direction == "UP" else price_now * (1 - move)
-            target = round(target, 2)
-
-            will_be_correct = services.evaluate_call(direction, target, price_later)
-            will_reveal = will_be_correct or reveals_losers
-
+            will_be_correct = services.evaluate_call(direction, target, future_price)
             events.append({
                 "handle": handle, "ticker": ticker, "direction": direction, "target": target,
-                "committed_at": committed_at, "deadline": deadline, "reveal": will_reveal,
+                "committed_at": committed_at, "deadline": deadline,
+                "reveal": will_be_correct or reveals_losers,
             })
 
-    # Two calls that are still open at the time of the class demo (hidden on the ledger)
+    # Two calls still open at the time of the class demo (hidden on the ledger)
     for handle, ticker, direction in [("@valuevera", "NVDA", "UP"), ("@cryptokingmax", "BTC-USD", "UP")]:
         committed_at = datetime(2026, 11, 18, 16, 30, tzinfo=timezone.utc)
-        deadline = datetime(2026, 11, 27, 21, 0, tzinfo=timezone.utc)
-        price_now = prices.get_simulated_price(ticker, committed_at)
+        entry_price = prices.get_simulated_price(ticker, committed_at)
         events.append({
             "handle": handle, "ticker": ticker, "direction": direction,
-            "target": round(price_now * 1.04, 2),
-            "committed_at": committed_at, "deadline": deadline, "reveal": False,
+            "target": round(entry_price * 1.04, 2), "committed_at": committed_at,
+            "deadline": services.daily_close_deadline(datetime(2026, 11, 27).date()),
+            "reveal": False,
         })
 
     return events
 
 
 def main():
-    # Build the seed in its own file, starting from a fresh genesis block
-    config.LEDGER_FILE = config.SEED_LEDGER_FILE
-    ledger.save_chain([ledger.create_genesis_block(START - timedelta(days=10))])
+    # Build the seed in a temporary database, starting from a fresh genesis block
+    config.LEDGER_DB = config.BASE_DIR / "seed_build.db"
+    ledger.replace_all_blocks([ledger.create_genesis_block(START - timedelta(days=10))])
 
     # 1) Register the influencers
     for number, (handle, name, platform, *_rest) in enumerate(INFLUENCERS):
@@ -112,12 +131,14 @@ def main():
     for event in plan_calls():
         actions.append((event["committed_at"], "commit", event))
         if event["reveal"]:
-            reveal_time = event["deadline"] + timedelta(minutes=random.randint(1, 10))
+            reveal_time = event["deadline"] + timedelta(minutes=random.randint(5, 600))
             actions.append((reveal_time, "reveal", event))
 
     # Verified subscriptions (still valid during the class demo)
-    actions.append((datetime(2026, 11, 2, 10, 0, tzinfo=timezone.utc), "verify", {"handle": "@valuevera"}))
-    actions.append((datetime(2026, 11, 10, 15, 0, tzinfo=timezone.utc), "verify", {"handle": "@dividendgiulia"}))
+    actions.append((datetime(2026, 11, 2, 10, 0, tzinfo=timezone.utc), "verify",
+                    {"handle": "@valuevera", "plan": "Plus"}))
+    actions.append((datetime(2026, 11, 10, 15, 0, tzinfo=timezone.utc), "verify",
+                    {"handle": "@dividendgiulia", "plan": "Pro"}))
 
     actions.sort(key=lambda action: action[0])
 
@@ -127,7 +148,8 @@ def main():
 
         if kind == "commit":
             result = services.create_commit(event["handle"], event["ticker"], event["direction"],
-                                            event["target"], event["deadline"], now=moment)
+                                            event["target"], event["deadline"], call_type="standard",
+                                            use_live_data=False, now=moment)
             event["code"] = result["code"]
             event["nonce"] = json.loads(result["receipt"])["nonce"]  # the secret kept by the influencer
 
@@ -136,15 +158,20 @@ def main():
                                    event["nonce"], use_live_data=False, now=moment)
 
         elif kind == "verify":
-            services.subscribe_verified(event["handle"], now=moment)
+            services.subscribe_verified(event["handle"], event["plan"], now=moment)
 
     services.expire_overdue_commits(now=LAST_DAY)
 
+    # 4) Save as readable JSON and remove the temporary database
+    ledger.export_chain_to_json(config.SEED_LEDGER_FILE)
     chain = ledger.load_chain()
+    config.LEDGER_DB.unlink()
+
     print(f"Seed ledger created: {len(chain)} blocks -> {config.SEED_LEDGER_FILE.name}")
     print(ledger.verify_chain(chain)[1])
     print()
-    print(services.compute_leaderboard(chain, now=LAST_DAY).to_string())
+    table = services.compute_leaderboard(chain, now=LAST_DAY)
+    print(table.drop(columns=["Name", "Platform"]).to_string())
 
 
 if __name__ == "__main__":

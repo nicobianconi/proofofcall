@@ -1,7 +1,7 @@
 """
 ledger.py
 ---------
-A minimal blockchain-style ledger, saved in a JSON file.
+A minimal blockchain-style ledger, stored in a SQLite database (ledger.db).
 
 Each block contains:
     index       position in the chain (0, 1, 2, ...)
@@ -15,6 +15,9 @@ Because every block includes the hash of the previous one, changing ANY old
 block breaks all the links after it. verify_chain() detects this immediately.
 That is what makes the track record tamper-evident.
 
+The code only ever INSERTS new rows: there is no function that updates or
+deletes a block (append-only).
+
 Note: this is a simulated ledger on a single server. In the roadmap, the
 block hashes would be anchored on a public blockchain (e.g. Ethereum/Polygon)
 so that not even the ProofOfCall team could rewrite the history.
@@ -23,6 +26,7 @@ so that not even the ProofOfCall team could rewrite the history.
 import copy
 import hashlib
 import json
+import sqlite3
 import threading
 from datetime import datetime, timezone
 
@@ -30,7 +34,7 @@ import config
 
 
 # Streamlit serves all users from the same Python process.
-# This lock makes sure two users never write to the file at the same moment.
+# This lock makes sure two users never add a block at the same moment.
 _write_lock = threading.Lock()
 
 
@@ -54,10 +58,6 @@ def timestamp_to_text(moment: datetime) -> str:
     return moment.astimezone(timezone.utc).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-# ---------------------------------------------------------------------------
-# Creating, loading and saving the chain
-# ---------------------------------------------------------------------------
-
 def create_genesis_block(moment: datetime = None) -> dict:
     """The first block of every chain. It has no previous block."""
     moment = moment or now_utc()
@@ -72,64 +72,122 @@ def create_genesis_block(moment: datetime = None) -> dict:
     return block
 
 
-def load_chain(path=None) -> list:
-    """Read the chain from disk. If the file doesn't exist yet, start a new one."""
-    path = path or config.LEDGER_FILE
+# ---------------------------------------------------------------------------
+# The database
+# ---------------------------------------------------------------------------
 
-    if not path.exists():
-        # First launch: copy the demo data if available, otherwise start empty
-        if config.SEED_LEDGER_FILE.exists() and path == config.LEDGER_FILE:
-            chain = json.loads(config.SEED_LEDGER_FILE.read_text(encoding="utf-8"))
-        else:
-            chain = [create_genesis_block()]
-        save_chain(chain, path)
-        return chain
-
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
-def save_chain(chain: list, path=None) -> None:
-    """Write the chain to disk (first to a temporary file, then swap: safer)."""
-    path = path or config.LEDGER_FILE
-    temporary_path = path.with_suffix(".tmp")
-    temporary_path.write_text(json.dumps(chain, indent=2), encoding="utf-8")
-    temporary_path.replace(path)
+def _connect():
+    """Open the database and create the 'blocks' table if it doesn't exist yet."""
+    connection = sqlite3.connect(config.LEDGER_DB)
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS blocks (
+            block_index INTEGER PRIMARY KEY,
+            timestamp   TEXT NOT NULL,
+            type        TEXT NOT NULL,
+            data        TEXT NOT NULL,
+            prev_hash   TEXT NOT NULL,
+            hash        TEXT NOT NULL UNIQUE
+        )
+    """)
+    return connection
 
 
-def append_block(block_type: str, data: dict, moment: datetime = None, path=None) -> dict:
+def _insert_blocks(connection, blocks: list) -> None:
+    connection.executemany(
+        "INSERT INTO blocks (block_index, timestamp, type, data, prev_hash, hash) VALUES (?, ?, ?, ?, ?, ?)",
+        [(block["index"], block["timestamp"], block["type"],
+          json.dumps(block["data"], sort_keys=True), block["prev_hash"], block["hash"])
+         for block in blocks],
+    )
+
+
+def _starting_chain() -> list:
+    """The demo history if available, otherwise just a genesis block."""
+    if config.SEED_LEDGER_FILE.exists():
+        return json.loads(config.SEED_LEDGER_FILE.read_text(encoding="utf-8"))
+    return [create_genesis_block()]
+
+
+def load_chain() -> list:
+    """Read every block, in order. On the very first launch, fill the database with the demo data."""
+    with _write_lock:
+        connection = _connect()
+        try:
+            rows = connection.execute(
+                "SELECT block_index, timestamp, type, data, prev_hash, hash FROM blocks ORDER BY block_index"
+            ).fetchall()
+
+            if not rows:
+                chain = _starting_chain()
+                _insert_blocks(connection, chain)
+                connection.commit()
+                return chain
+        finally:
+            connection.close()
+
+    return [
+        {"index": row[0], "timestamp": row[1], "type": row[2],
+         "data": json.loads(row[3]), "prev_hash": row[4], "hash": row[5]}
+        for row in rows
+    ]
+
+
+def append_block(block_type: str, data: dict, moment: datetime = None) -> dict:
     """
-    Add a new block at the end of the chain and save it.
+    Add a new block at the end of the chain.
     This is the ONLY way to write to the ledger: old blocks are never edited.
     """
     moment = moment or now_utc()
+    chain = load_chain()  # also creates the database on the first launch
 
     with _write_lock:
-        chain = load_chain(path)
-        previous_block = chain[-1]
+        connection = _connect()
+        try:
+            last_row = connection.execute(
+                "SELECT block_index, hash FROM blocks ORDER BY block_index DESC LIMIT 1"
+            ).fetchone()
+            previous_index, previous_hash = last_row if last_row else (chain[-1]["index"], chain[-1]["hash"])
 
-        new_block = {
-            "index": previous_block["index"] + 1,
-            "timestamp": timestamp_to_text(moment),
-            "type": block_type,
-            "data": data,
-            "prev_hash": previous_block["hash"],
-        }
-        new_block["hash"] = compute_block_hash(new_block)
+            new_block = {
+                "index": previous_index + 1,
+                "timestamp": timestamp_to_text(moment),
+                "type": block_type,
+                "data": data,
+                "prev_hash": previous_hash,
+            }
+            new_block["hash"] = compute_block_hash(new_block)
 
-        chain.append(new_block)
-        save_chain(chain, path)
+            _insert_blocks(connection, [new_block])
+            connection.commit()
+        finally:
+            connection.close()
 
     return new_block
 
 
-def reset_to_seed() -> None:
-    """Replace the current ledger with the demo data (used by the sidebar button)."""
+def replace_all_blocks(chain: list) -> None:
+    """
+    Admin only: replace the whole database with the given chain.
+    Used by the password-protected "Reset demo data" button and by seed_data.py.
+    """
     with _write_lock:
-        if config.SEED_LEDGER_FILE.exists():
-            chain = json.loads(config.SEED_LEDGER_FILE.read_text(encoding="utf-8"))
-        else:
-            chain = [create_genesis_block()]
-        save_chain(chain)
+        connection = _connect()
+        try:
+            connection.execute("DELETE FROM blocks")
+            _insert_blocks(connection, chain)
+            connection.commit()
+        finally:
+            connection.close()
+
+
+def reset_to_seed() -> None:
+    """Restore the demo history (password-protected button in the sidebar)."""
+    replace_all_blocks(_starting_chain())
+
+
+def export_chain_to_json(path) -> None:
+    """Save the whole chain as readable JSON (used to create seed_ledger.json)."""
+    path.write_text(json.dumps(load_chain(), indent=2), encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
@@ -159,7 +217,7 @@ def simulate_tampering(chain: list) -> tuple:
     """
     Demo helper: on a COPY of the chain, try to turn a wrong call into a correct one,
     like a dishonest influencer (or a dishonest platform) would.
-    Returns (tampered_block_index, verification_result). The real file is untouched.
+    Returns (tampered_block_index, verification_result). The real database is untouched.
     """
     fake_chain = copy.deepcopy(chain)
 

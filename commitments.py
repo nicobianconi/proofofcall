@@ -90,7 +90,7 @@ def compute_commitment(handle, ticker, direction, target, deadline_iso, nonce) -
 def short_code(commit_hash: str) -> str:
     """
     The first 8 characters of the hash.
-    This is the code the influencer puts in the social post (e.g. '#PoC-1a2b3c4d')
+    This is the code the influencer puts in the social post (e.g. "#PoC-1a2b3c4d")
     so followers can find the commit on the ledger.
     """
     return commit_hash[:8]

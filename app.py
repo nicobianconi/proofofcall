@@ -10,6 +10,7 @@ The app is organised in pages (chosen from the sidebar). Each page is one
 function below. All the real work is done in services.py.
 """
 
+import hmac
 import json
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -26,7 +27,7 @@ import services
 
 LOCAL_TZ = ZoneInfo(config.DISPLAY_TIMEZONE)
 
-st.set_page_config(page_title="ProofOfCall", page_icon="✅", layout="wide")
+st.set_page_config(page_title=config.APP_NAME, page_icon="✅", layout="wide")
 
 
 # ===========================================================================
@@ -45,6 +46,12 @@ def show_percent(value) -> str:
     if value is None or pd.isna(value):
         return "–"
     return f"{value:.0%}"
+
+
+def show_interval(low, high) -> str:
+    if low is None or pd.isna(low):
+        return "–"
+    return f"{low:.0%} – {high:.0%}"
 
 
 @st.cache_data(ttl=60, show_spinner=False)
@@ -66,14 +73,25 @@ def influencer_selector(label: str, key: str):
     return st.selectbox(label, list(influencers.keys()), key=key)
 
 
+STATUS_ICONS = {
+    services.STATUS_CORRECT: "✅",
+    services.STATUS_WRONG: "❌",
+    services.STATUS_EXPIRED: "⌛",
+    services.STATUS_INVALID: "🚫",
+    services.STATUS_PENDING: "🔒",
+    services.STATUS_AWAITING: "⏰",
+}
+
+
 def calls_to_table(calls: list) -> pd.DataFrame:
     """Turn a list of calls into a readable table. Hidden fields show as 🔒."""
     rows = []
     for call in calls:
         hidden = call["ticker"] is None
         rows.append({
-            "Code": "#PoC-" + call["code"],
+            "Code": config.CODE_PREFIX + call["code"],
             "Influencer": call["handle"],
+            "Type": "Demo" if call["call_type"] == "demo" else "Standard",
             "Committed": show_time(call["committed_at"]),
             "Deadline": show_time(call["deadline"]),
             "Ticker": "🔒" if hidden else call["ticker"],
@@ -81,22 +99,21 @@ def calls_to_table(calls: list) -> pd.DataFrame:
             "Target": "🔒" if hidden else call["target"],
             "Price at commit": call["price_at_commit"],
             "Price at deadline": call["price_at_deadline"],
-            "Status": call["status"],
+            "Status": f"{STATUS_ICONS.get(call['status'], '')} {call['status']}",
         })
     return pd.DataFrame(rows)
 
 
-STATUS_ICONS = {
-    services.STATUS_CORRECT: "✅",
-    services.STATUS_WRONG: "❌",
-    services.STATUS_EXPIRED: "⌛",
-    services.STATUS_PENDING: "🔒",
-    services.STATUS_AWAITING: "⏰",
-}
+def read_admin_password():
+    """The admin password from Streamlit secrets, or None if it was never set."""
+    try:
+        return st.secrets.get(config.ADMIN_PASSWORD_SECRET_NAME)
+    except Exception:  # no secrets file at all
+        return None
 
 
 # ===========================================================================
-# Sidebar: navigation and demo settings
+# Sidebar: navigation, price source, password-protected demo tools
 # ===========================================================================
 
 PAGES = [
@@ -111,8 +128,8 @@ PAGES = [
 ]
 
 with st.sidebar:
-    st.title("✅ ProofOfCall")
-    st.caption("Verified track records for finfluencers")
+    st.title(f"✅ {config.APP_NAME}")
+    st.caption(config.APP_TAGLINE)
 
     page = st.radio("Go to", PAGES, label_visibility="collapsed")
 
@@ -129,13 +146,36 @@ with st.sidebar:
         st.caption("⚠️ Simulated prices: NOT real market data.")
 
     st.divider()
-    with st.expander("Demo tools"):
-        st.write("Restore the demo influencers and their history.")
-        if st.button("Reset demo data"):
-            ledger.reset_to_seed()
-            st.cache_data.clear()
-            st.success("Demo data restored.")
-            st.rerun()
+    with st.expander("🔐 Demo tools (admin)"):
+        admin_password = read_admin_password()
+
+        if not admin_password:
+            st.caption(f"Disabled: no admin password set. Add `{config.ADMIN_PASSWORD_SECRET_NAME}` "
+                       "to the Streamlit secrets to enable these tools.")
+        elif st.session_state.get("is_admin"):
+            st.success("Admin mode")
+            st.write("Restore the demo influencers and their history. "
+                     "**All calls made since the last reset will be deleted.**")
+            if st.button("Reset demo data", type="primary"):
+                ledger.reset_to_seed()
+                st.cache_data.clear()
+                st.toast("Demo data restored.")
+                st.rerun()
+            if st.button("Log out"):
+                st.session_state["is_admin"] = False
+                st.rerun()
+        else:
+            typed_password = st.text_input("Admin password", type="password")
+            if st.button("Unlock"):
+                # compare_digest: a safe way to compare passwords
+                if hmac.compare_digest(typed_password.encode(), str(admin_password).encode()):
+                    st.session_state["is_admin"] = True
+                    st.rerun()
+                else:
+                    st.error("Wrong password.")
+
+    st.divider()
+    st.caption("⚠️ " + config.DISCLAIMER)
 
 
 # ANTI-CHEATING RULE: every time anyone opens the app, overdue calls expire
@@ -151,13 +191,13 @@ chain = ledger.load_chain()
 # ===========================================================================
 
 def page_home():
-    st.title("ProofOfCall")
+    st.title(config.APP_NAME)
     st.subheader("Verified track records for financial influencers")
 
     st.write(
         "Finfluencers on TikTok, YouTube and Telegram can delete their wrong stock and crypto "
         "calls and repost only the winners. Their followers never see the real hit rate. "
-        "**ProofOfCall makes every call permanent and verifiable.**"
+        f"**{config.APP_NAME} makes every call permanent and verifiable.**"
     )
 
     column_1, column_2, column_3 = st.columns(3)
@@ -167,12 +207,26 @@ def page_home():
                  "Nobody can read it, and nobody can change it.")
     with column_2:
         st.markdown("#### 2. 🔓 Reveal")
-        st.write("At the deadline, the influencer reveals the prediction. The app checks the hash "
+        st.write("After the deadline, the influencer reveals the prediction. The app checks the hash "
                  "and fetches the **real market price**.")
     with column_3:
         st.markdown("#### 3. 🏆 Track record")
-        st.write(f"Every result is scored automatically. A call not revealed within "
-                 f"{config.REVEAL_WINDOW_MINUTES} minutes after the deadline **counts as wrong**.")
+        st.write("Every result is scored automatically. Calls that are **not revealed** in time, "
+                 "or that are **invalid**, count as wrong.")
+
+    with st.expander("📏 The scoring rule"):
+        standard = config.CALL_TYPES["standard"]
+        demo = config.CALL_TYPES["demo"]
+        st.markdown(f"""
+- **UP** is a hit if the price at the deadline is **at or above** the target; **DOWN** if it is **at or below**.
+- **Standard calls** settle at the **close of the deadline day** (last price before {config.DAILY_CLOSE_TIME} Italian time).
+  The target must be at least **{standard['min_target_distance']:.0%} away** from the price at commit time.
+  The influencer has **{standard['reveal_window_minutes'] // 60} hours** to reveal.
+- **Live demo calls** use the same logic in minutes: target at least {demo['min_target_distance']:.1%} away,
+  {demo['reveal_window_minutes']} minutes to reveal.
+- **Unrevealed or invalid calls count as wrong.**
+- A hit rate is shown only from **{config.MIN_CALLS_FOR_HIT_RATE} resolved calls**, with a 95% confidence interval.
+""")
 
     st.divider()
 
@@ -213,7 +267,8 @@ def page_register():
     if submitted:
         try:
             block = services.register_influencer(handle, display_name, platform)
-            st.success(f"Welcome {block['data']['handle']}! Your profile is on the ledger (block #{block['index']}).")
+            st.success(f"Welcome {block['data']['handle']}! Your profile is on the ledger (block #{block['index']}). "
+                       "Now go to **🔒 Commit a call**.")
         except services.ProofOfCallError as error:
             st.error(str(error))
 
@@ -230,6 +285,11 @@ def page_commit():
     if handle is None:
         return
 
+    # --- Type of call
+    call_type = st.radio("Type of call", list(config.CALL_TYPES.keys()), horizontal=True,
+                         format_func=lambda key: config.CALL_TYPES[key]["label"])
+    rules = config.CALL_TYPES[call_type]
+
     # --- Ticker (outside the form, so the current price updates immediately)
     ticker_choice = st.selectbox("Ticker", config.SUGGESTED_TICKERS + ["Other..."])
     if ticker_choice == "Other...":
@@ -241,7 +301,12 @@ def page_commit():
     if ticker:
         price_now, source = current_price(ticker, use_live_data)
         if price_now is not None:
-            st.info(f"Current price of **{ticker}**: **{price_now:,.2f}**  ·  source: {source}")
+            minimum = rules["min_target_distance"]
+            st.info(
+                f"Current price of **{ticker}**: **{price_now:,.2f}**  ·  source: {source}\n\n"
+                f"Target rule ({minimum:.1%} minimum): UP needs **≥ {price_now * (1 + minimum):,.2f}**, "
+                f"DOWN needs **≤ {price_now * (1 - minimum):,.2f}**"
+            )
         else:
             st.warning(f"Could not fetch the current price of {ticker}. Check the ticker or switch to offline mode.")
 
@@ -253,25 +318,30 @@ def page_commit():
                                  help="UP is correct if the price at the deadline is ≥ target. "
                                       "DOWN is correct if it is ≤ target.")
 
-        deadline_mode = st.radio("Deadline", ["In a few minutes (live demo)", "Specific date and time"],
-                                 horizontal=True)
-        minutes_from_now = st.number_input("Minutes from now", min_value=1, max_value=600, value=5)
-        deadline_date = st.date_input("Date", value=datetime.now(LOCAL_TZ).date() + timedelta(days=1))
-        deadline_time = st.time_input("Time (local)", value=datetime.strptime("17:30", "%H:%M").time())
-        st.caption("Only the field matching the chosen deadline type is used.")
+        if call_type == "demo":
+            minutes_from_now = st.number_input("Deadline: minutes from now", min_value=1, max_value=600, value=10)
+            st.caption(f"You will have {rules['reveal_window_minutes']} minutes after the deadline to reveal.")
+        else:
+            deadline_day = st.date_input("Deadline day",
+                                         value=datetime.now(LOCAL_TZ).date() + timedelta(days=1),
+                                         min_value=datetime.now(LOCAL_TZ).date())
+            st.caption(f"The call settles at the close of that day ({config.DAILY_CLOSE_TIME} Italian time). "
+                       f"You will have {rules['reveal_window_minutes'] // 60} hours to reveal.")
 
         submitted = st.form_submit_button("🔒 Commit to the ledger", type="primary")
 
     if submitted:
-        if deadline_mode.startswith("In a few minutes"):
+        if call_type == "demo":
             # Round up to the next full minute, so deadlines look clean (e.g. 15:42:00)
             deadline = datetime.now(timezone.utc) + timedelta(minutes=int(minutes_from_now))
             deadline = deadline.replace(second=0, microsecond=0) + timedelta(minutes=1)
         else:
-            deadline = datetime.combine(deadline_date, deadline_time, tzinfo=LOCAL_TZ)
+            deadline = services.daily_close_deadline(deadline_day)
 
         try:
-            result = services.create_commit(handle, ticker, direction, target, deadline)
+            with st.spinner("Checking the target and writing to the ledger..."):
+                result = services.create_commit(handle, ticker, direction, target, deadline,
+                                                call_type=call_type, use_live_data=use_live_data)
             st.session_state["last_commit"] = result
         except services.ProofOfCallError as error:
             st.error(str(error))
@@ -280,14 +350,14 @@ def page_commit():
     result = st.session_state.get("last_commit")
     if result:
         st.divider()
-        st.success(f"Committed! Your call code is **#PoC-{result['code']}** "
+        st.success(f"Committed! Your call code is **{config.CODE_PREFIX}{result['code']}** "
                    f"(block #{result['block']['index']}).")
 
         st.markdown("**What the public ledger shows** (no one can tell what you predicted):")
         st.code(result["commit_hash"], language=None)
 
-        st.markdown("**Your secret receipt.** Save it! You need it to reveal the call. "
-                    "If you lose it, the call will expire and count as wrong.")
+        st.markdown("**Your secret receipt.** Save it (copy icon at the top right of the box)! "
+                    "You need it to reveal the call. If you lose it, the call will expire and count as wrong.")
         st.code(result["receipt"], language="json")
         st.download_button("⬇️ Download receipt", data=result["receipt"],
                            file_name=f"proofofcall_{result['code']}.json", mime="application/json")
@@ -297,7 +367,7 @@ def page_commit():
         st.markdown("**Suggested social post:**")
         st.code(f"{arrow} My call: {receipt['ticker']} {receipt['direction']} to {receipt['target']} "
                 f"by {show_time(receipt['deadline'])}\n"
-                f"Verified on ProofOfCall · #PoC-{result['code']}", language=None)
+                f"Verified on {config.APP_NAME} · {config.CODE_PREFIX}{result['code']}", language=None)
 
 
 # ===========================================================================
@@ -320,7 +390,9 @@ def do_reveal(code, ticker, direction, target, nonce):
     )
     st.caption(f"Price source: {outcome['source']}  ·  result saved in block #{outcome['block']['index']}")
 
-    if outcome["correct"]:
+    if not outcome["valid"]:
+        st.error("🚫 INVALID call: the target was too close to the price at commit time. It counts as wrong.")
+    elif outcome["correct"]:
         st.success("🎯 CORRECT call! Added to your verified track record.")
         st.balloons()
     else:
@@ -329,7 +401,7 @@ def do_reveal(code, ticker, direction, target, nonce):
 
 def page_reveal():
     st.title("🔓 Reveal a call")
-    st.write(f"After the deadline you have **{config.REVEAL_WINDOW_MINUTES} minutes** to reveal. "
+    st.write("After the deadline, reveal your prediction within the reveal window. "
              "The app recomputes the hash: if anything was changed, the reveal is rejected.")
 
     # Calls that can be revealed right now
@@ -337,7 +409,8 @@ def page_reveal():
     if awaiting:
         st.markdown("**Calls waiting for a reveal right now:**")
         for call in awaiting:
-            st.write(f"⏰ #PoC-{call['code']} by {call['handle']} · reveal before {show_time(call['reveal_until'])}")
+            st.write(f"⏰ {config.CODE_PREFIX}{call['code']} by {call['handle']} · "
+                     f"reveal before {show_time(call['reveal_until'])}")
 
     tab_receipt, tab_manual = st.tabs(["📋 Paste receipt", "✍️ Enter manually"])
 
@@ -353,7 +426,7 @@ def page_reveal():
 
     with tab_manual:
         with st.form("manual_reveal_form"):
-            code = st.text_input("Call code", placeholder="#PoC-1a2b3c4d")
+            code = st.text_input("Call code", placeholder=f"{config.CODE_PREFIX}1a2b3c4d")
             ticker = st.text_input("Ticker")
             direction = st.radio("Direction", config.DIRECTIONS, horizontal=True)
             target = st.number_input("Target price", min_value=0.0, value=None, step=0.01, format="%.2f")
@@ -373,39 +446,55 @@ def page_reveal():
 
 def page_leaderboard():
     st.title("🏆 Leaderboard")
-    st.write("Verified hit rates. **Expired calls count as wrong**, so deleting losers doesn't help.")
+    st.write(f"Verified hit rates. **Expired and invalid calls count as wrong**, so deleting losers "
+             f"doesn't help. A hit rate is shown only from **{config.MIN_CALLS_FOR_HIT_RATE} resolved calls**.")
 
     table = services.compute_leaderboard(chain)
     if table.empty:
         st.info("No influencers yet.")
         return
 
-    # What followers would believe if they only saw the revealed (posted) calls
-    revealed = table["Correct"] + table["Wrong"]
-    table["What their feed shows"] = (table["Correct"] / revealed).where(revealed > 0)
-    table["Verified"] = table["Verified"].map({True: "✅", False: ""})
-
-    columns = ["Influencer", "Verified", "Platform", "Hit rate", "What their feed shows",
-               "Resolved calls", "Correct", "Wrong", "Expired", "Open"]
+    display = pd.DataFrame({
+        "Influencer": table["Influencer"],
+        "Verified": table["Verified"].map({True: "✅", False: ""}),
+        "Platform": table["Platform"],
+        "Hit rate": table["Hit rate"].where(table["Track record"]),
+        "95% confidence interval": [
+            show_interval(low, high) if has_record else "–"
+            for low, high, has_record in zip(table["CI low"], table["CI high"], table["Track record"])
+        ],
+        "Resolved calls": [
+            str(count) if has_record else f"{count}/{config.MIN_CALLS_FOR_HIT_RATE} (building)"
+            for count, has_record in zip(table["Resolved calls"], table["Track record"])
+        ],
+        "Correct": table["Correct"],
+        "Wrong": table["Wrong"],
+        "Expired": table["Expired"],
+        "Invalid": table["Invalid"],
+        "Open": table["Open"],
+    })
 
     st.dataframe(
-        table[columns],
+        display,
         hide_index=True,
         width="stretch",
         column_config={
             "Hit rate": st.column_config.ProgressColumn(
                 "Verified hit rate", format="percent", min_value=0, max_value=1),
-            "What their feed shows": st.column_config.NumberColumn(
-                "Hit rate on revealed calls only", format="percent",
-                help="What followers would see if expired (hidden) calls were ignored."),
         },
     )
-    st.caption(f"Influencers with fewer than {config.MIN_CALLS_FOR_RANKING} resolved calls are listed at the bottom.")
 
+    # --- The key insight of the pitch: what followers see vs reality
     st.markdown("#### Feed vs reality")
-    chart_data = table.set_index("Influencer")[["What their feed shows", "Hit rate"]].rename(
-        columns={"What their feed shows": "Revealed calls only", "Hit rate": "Verified (expired = wrong)"})
-    st.bar_chart(chart_data * 100, stack=False, y_label="Hit rate (%)")
+    st.write("Left bar: the hit rate followers would see if hidden (expired) calls were ignored. "
+             "Right bar: the verified hit rate.")
+    ranked = table[table["Track record"]]
+    if ranked.empty:
+        st.caption("No influencer has enough calls yet.")
+    else:
+        chart_data = ranked.set_index("Influencer")[["Feed hit rate", "Hit rate"]].rename(
+            columns={"Feed hit rate": "Revealed calls only", "Hit rate": "Verified (expired = wrong)"})
+        st.bar_chart(chart_data * 100, stack=False, y_label="Hit rate (%)")
 
 
 # ===========================================================================
@@ -422,20 +511,31 @@ def page_profile():
     profile = services.get_influencers(chain)[handle]
     calls = [call for call in services.get_calls(chain) if call["handle"] == handle]
     stats = services.compute_stats(calls)
-    verified = services.is_verified(chain, handle)
+    plan = services.active_plan(chain, handle)
 
-    st.subheader(f"{profile['display_name']}  ·  {handle}  {'✅ Verified' if verified else ''}")
-    st.caption(f"{profile['platform']} · on ProofOfCall since {show_time(profile['registered_at'])}")
+    st.subheader(f"{profile['display_name']}  ·  {handle}  {'✅ Verified ' + plan if plan else ''}")
+    st.caption(f"{profile['platform']} · on {config.APP_NAME} since {show_time(profile['registered_at'])}")
 
     metric_1, metric_2, metric_3, metric_4 = st.columns(4)
-    metric_1.metric("Verified hit rate", show_percent(stats["hit_rate"]))
-    metric_2.metric("Resolved calls", stats["resolved"])
-    metric_3.metric("Expired (hidden losers)", stats["expired"])
+    if stats["has_track_record"]:
+        metric_1.metric("Verified hit rate", show_percent(stats["hit_rate"]),
+                        help="95% confidence interval: " + show_interval(stats["ci_low"], stats["ci_high"]))
+    else:
+        metric_1.metric("Verified hit rate", "Building…",
+                        help=f"Shown after {config.MIN_CALLS_FOR_HIT_RATE} resolved calls.")
+    metric_2.metric("Resolved calls", f"{stats['resolved']}/{config.MIN_CALLS_FOR_HIT_RATE}"
+                    if not stats["has_track_record"] else stats["resolved"])
+    metric_3.metric("Expired or invalid", stats["expired"] + stats["invalid"])
     metric_4.metric("Open calls", stats["open"])
 
+    if stats["has_track_record"]:
+        st.caption(f"95% confidence interval of the hit rate: **{show_interval(stats['ci_low'], stats['ci_high'])}**")
+    else:
+        st.info(f"Track record in progress: {stats['resolved']} of {config.MIN_CALLS_FOR_HIT_RATE} calls. "
+                "With few calls, a high hit rate can be pure luck.")
+
     # --- Hit rate over time
-    resolved_calls = [call for call in calls if call["status"] in
-                      (services.STATUS_CORRECT, services.STATUS_WRONG, services.STATUS_EXPIRED)]
+    resolved_calls = [call for call in calls if call["status"] in services.RESOLVED_STATUSES]
     if resolved_calls:
         resolved_calls = sorted(resolved_calls, key=lambda call: call["deadline"])
         history = pd.DataFrame({
@@ -448,22 +548,22 @@ def page_profile():
 
     # --- All calls
     st.markdown("#### All calls")
-    table = calls_to_table(calls)
-    if not table.empty:
-        table["Status"] = table["Status"].map(lambda status: f"{STATUS_ICONS.get(status, '')} {status}")
-    st.dataframe(table, hide_index=True, width="stretch")
+    st.dataframe(calls_to_table(calls), hide_index=True, width="stretch")
 
     # --- Verified subscription (business model)
     st.divider()
     st.markdown("#### ✅ Verified badge")
-    if verified:
-        st.success("Active subscription. Paste this badge in your bio:")
+    if plan:
+        st.success(f"Active plan: **Verified {plan}**. Paste this badge in your bio:")
         st.code(services.badge_text(chain, handle), language=None)
     else:
-        st.write(f"Get the **Verified** badge for your bio: €{config.VERIFIED_PRICE_EUR_PER_MONTH}/month. "
-                 "Show your followers a track record nobody can fake.")
-        if st.button(f"Subscribe for €{config.VERIFIED_PRICE_EUR_PER_MONTH} (simulated payment)", type="primary"):
-            services.subscribe_verified(handle)
+        st.write("Show your followers a track record nobody can fake. Plans: **Free** (public profile), "
+                 + ", ".join(f"**{name}** €{price:.0f}/month" for name, price in config.VERIFIED_PLANS.items())
+                 + ".")
+        chosen_plan = st.radio("Plan", list(config.VERIFIED_PLANS.keys()), horizontal=True,
+                               format_func=lambda name: f"{name} · €{config.VERIFIED_PLANS[name]:.0f}/month")
+        if st.button(f"Subscribe to {chosen_plan} (simulated payment)", type="primary"):
+            services.subscribe_verified(handle, chosen_plan)
             st.success("Subscription active! The badge is now on your profile.")
             st.rerun()
 
@@ -506,7 +606,7 @@ def page_ledger():
         direction = column_3.selectbox("Direction", config.DIRECTIONS)
         column_4, column_5, column_6 = st.columns(3)
         target = column_4.number_input("Target", min_value=0.0, value=None, step=0.01, format="%.2f")
-        deadline_text = column_5.text_input("Deadline (UTC, as on the ledger)", placeholder="2026-11-23T16:30:00Z")
+        deadline_text = column_5.text_input("Deadline (UTC, as on the ledger)", placeholder="2026-11-23T21:00:00Z")
         nonce = column_6.text_input("Nonce")
         submitted = st.form_submit_button("Compute SHA-256")
 
@@ -514,15 +614,17 @@ def page_ledger():
         if not (handle and ticker and target and deadline_text and nonce):
             st.error("Please fill in all the fields.")
         else:
-            message_text = commitments.build_message(handle, ticker, direction, target, deadline_text.strip(), nonce.strip())
-            computed = commitments.compute_commitment(handle, ticker, direction, target, deadline_text.strip(), nonce.strip())
+            message_text = commitments.build_message(handle, ticker, direction, target,
+                                                     deadline_text.strip(), nonce.strip())
+            computed = commitments.compute_commitment(handle, ticker, direction, target,
+                                                      deadline_text.strip(), nonce.strip())
             st.write("Hashed text:")
             st.code(message_text, language=None)
             st.write("SHA-256:")
             st.code(computed, language=None)
             known_hashes = {call["commit_hash"] for call in services.get_calls(chain)}
             if computed in known_hashes:
-                st.success(f"✅ This matches commit #PoC-{commitments.short_code(computed)} on the ledger.")
+                st.success(f"✅ This matches commit {config.CODE_PREFIX}{commitments.short_code(computed)} on the ledger.")
             else:
                 st.warning("This hash is not on the ledger.")
 
@@ -560,7 +662,8 @@ def page_api():
     column_1, column_2, column_3 = st.columns(3)
     only_verified = column_1.checkbox("Only Verified creators", value=True)
     minimum_hit_rate = column_2.slider("Minimum hit rate (%)", 0, 100, 50)
-    minimum_calls = column_3.number_input("Minimum resolved calls", min_value=0, value=config.MIN_CALLS_FOR_RANKING)
+    minimum_calls = column_3.number_input("Minimum resolved calls", min_value=config.MIN_CALLS_FOR_HIT_RATE,
+                                          value=config.MIN_CALLS_FOR_HIT_RATE)
 
     table = services.compute_leaderboard(chain)
     creators = []
@@ -576,8 +679,9 @@ def page_api():
             "platform": row["Platform"],
             "verified": bool(row["Verified"]),
             "hit_rate": round(float(row["Hit rate"]), 3),
+            "hit_rate_ci_95": [round(float(row["CI low"]), 3), round(float(row["CI high"]), 3)],
             "resolved_calls": int(row["Resolved calls"]),
-            "expired_calls": int(row["Expired"]),
+            "expired_or_invalid_calls": int(row["Expired"] + row["Invalid"]),
         })
 
     response = {
@@ -595,12 +699,7 @@ def page_api():
     st.download_button("⬇️ Download JSON", data=json.dumps(response, indent=2),
                        file_name="proofofcall_creators.json", mime="application/json")
 
-    st.markdown("#### Pricing (B2B)")
-    st.table(pd.DataFrame({
-        "Plan": ["Starter", "Growth", "Enterprise"],
-        "Requests / month": ["10,000", "250,000", "Unlimited"],
-        "Price": ["€99 / month", "€499 / month", "Custom"],
-    }))
+    st.caption("Business model: flat platform fee plus metered overage per request (see the pitch deck).")
 
 
 # ===========================================================================
