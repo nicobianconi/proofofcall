@@ -230,7 +230,7 @@ def simulate_tampering_step_by_step(chain: list):
     no wrong call to tamper with.
     """
     target_position = None
-    for position in range(len(chain) - 1, 0, -1):
+    for position in range(len(chain) - 2, 0, -1):
         block = chain[position]
         if block["type"] == "REVEAL" and block["data"].get("correct") is False:
             target_position = position
